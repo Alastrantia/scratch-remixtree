@@ -9,8 +9,8 @@ class RemixNodes:
     def print_tree(self, prefix="", is_last=True):
         connector = "└── " if is_last else "├── "
         print(prefix + connector + str(self.value))
-        
+
         prefix += "    " if is_last else "│   "
-        
+
         for i, child in enumerate(self.children):
             child.print_tree(prefix, i == len(self.children) - 1)
