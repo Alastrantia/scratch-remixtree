@@ -1,7 +1,7 @@
 import requests
 from node import *
 
-PROJECT_ID = 948573479
+PROJECT_ID = 718663685
 
 def fetch_project_data(extended_url, base_url="https://api.scratch.mit.edu/projects/"):
     try:
@@ -35,23 +35,43 @@ def get_all_remixes(project_id, num_remixes):
             response = requests.get(
                 f"https://api.scratch.mit.edu/projects/{project_id}/remixes?limit=40&offset={index}"
             )
-            data = response.json()
-            print(f"got {response.status_code}: len: {len(data)}, index: {index}")
-            
-            all_remixes += data
+            all_remixes += response.json()
 
-        print("fetched remixes sucessfully i guess")
+        print(".")
     except Exception as e:
         print(f"oop, something went wrong when getting the remixes... {e}")
     return all_remixes
 
 
+# i feel like a god this is the first time ive ever used recursive funcs :sob:
+def build_remix_tree(project_id, max_depth=None, current_depth=0):
+    node = RemixNodes(project_id)
+    if max_depth != None and current_depth >= max_depth:
+        return node 
+    
+    num_remixes = get_num_remixes(project_id)
+    
+    if num_remixes > 0:
+        all_remixes = get_all_remixes(project_id, num_remixes)
+
+        for remix in all_remixes:
+            remix_id = remix["id"]
+            child_node = build_remix_tree(remix_id, max_depth, current_depth + 1)
+            node.add_child(child_node)
+    
+    return node
+
+
 def main():
     root = get_root_id(PROJECT_ID)
-    root_count = get_num_remixes(root)
-
-    print(f"the root of {PROJECT_ID} ({root}) has {root_count} remixes")
-    get_all_remixes(root, root_count)
-
+    root_remix_count = get_num_remixes(root)
+    print(f"{root} has ")
+    print(f"making tree from {root}...")
+    
+    # HAHAHHAHAHAHHAHAHAHAHHAHAHAA
+    tree = build_remix_tree(root)
+    
+    print(f"done hehe")
+    tree.print_tree()
 
 main()
