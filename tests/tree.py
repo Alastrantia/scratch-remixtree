@@ -1,7 +1,7 @@
-import requests
+import requests, sys
 from node import *
 
-PROJECT_ID = 718663685
+PROJECT_ID = sys.argv[1]
 
 def fetch_project_data(extended_url, base_url="https://api.scratch.mit.edu/projects/"):
     try:
