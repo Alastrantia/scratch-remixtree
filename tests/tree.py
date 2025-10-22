@@ -1,4 +1,5 @@
 import sys
+import time
 
 import requests
 from node import *
@@ -45,13 +46,15 @@ def get_all_remixes(project_id, num_remixes):
 
     try:
         for index in range(0, num_remixes, 40):
+            start_time = time.perf_counter()
             response = requests.get(
                 f"https://api.scratch.mit.edu/projects/{project_id}/remixes?limit=40&offset={index}"
             )
-            all_remixes += response.json()
+            end_time = time.perf_counter()
             print(
-                f"getting remixes for {project_id} with offset {index}... might take a bit"
+                f"getting remixes for {project_id}, took {(end_time - start_time):.4f} seconds"
             )
+            all_remixes += response.json()
 
     except Exception as e:
         print(f"oop, something went wrong when getting the remixes... {e}")
@@ -82,15 +85,22 @@ def build_remix_tree(project_id, max_depth=None, current_depth=0):
 def main():
     root = get_root_id(PROJECT_ID)
     root_remix_count = get_num_remixes(root)
+    if root_remix_count > 5000:
+        print("sorry bud this would take forever and kill the scratch servers on the way...")
+        sys.exit(0)
+
     print(f"the project initially came from {root}")
     print(f"that 'root' has {root_remix_count} DIRECT remixes")
     print(f"making tree from {root}...")
 
-    # HAHAHHAHAHAHHAHAHAHAHHAHAHAA
+    start_time = time.perf_counter()
     tree = build_remix_tree(root)
+    end_time = time.perf_counter()
+    elapsed_time = end_time - start_time
 
     print(f"done hehe, in total we have {total_children_count} projects :O")
     tree.print_tree()
+    print(f"building the tree took {elapsed_time:.4f} seconds.")
 
 
 main()
