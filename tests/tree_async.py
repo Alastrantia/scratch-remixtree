@@ -125,8 +125,9 @@ async def main():
         root_remix_count = root_data.get("stats", {}).get("remixes", 0)
         
         if root_remix_count > 5000:
-            print("sorry bud this would take forever and kill the scratch servers on the way...")
-            sys.exit(0)
+            print("bro is tryna kill the scratch servers (joke) it'll take forever tho")
+            # sys.exit(0)
+            # >:D
         
         print(f"the project initially came from {root}")
         print(f"that 'root' has {root_remix_count} DIRECT remixes")
