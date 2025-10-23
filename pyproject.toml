@@ -1,9 +1,9 @@
 [project]
 name = "remixtree-cli"
-version = "0.1.0"
+version = "0.1.2"
 description = "remake scratch's remix tree feature #BringBackRemixTrees"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 license = { text = "MIT" }
 
 dependencies = [

@@ -24,7 +24,7 @@ This CLI fetches a project’s remixes and builds a tree showing how all the rem
 - Optional verbose mode to go crazy
 - Save the full remix tree to a file if ya want to
 - Supports max depth if you wanna show empathy for the Scratch Servers
-- Works on Linux, macOS, and Windows (Python 3.10+) (hopefully, if not, tell me)
+- Works on Linux, macOS, and Windows (Python 3.9+) (hopefully, if not, tell me)
 
 ---
 
