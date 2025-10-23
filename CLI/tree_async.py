@@ -309,13 +309,14 @@ async def main():
                     console.print("[dim]... (The rest is long! Use -o flag to save the full structure)[/dim]")
                 console.print("------------------------------")
             
-    except KeyboardInterrupt:
-        console.print("\n[bold yellow]⚠️ You hit Ctrl+C! We're stopping early.[/bold yellow]")
-        sys.exit(0)
     except Exception as e:
         console.print(f"\n[bold red]✗ SOMETHING BROKE:[/bold red] An unexpected error happened: {e}")
         sys.exit(1)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        console.print("\n[bold yellow]⚠️ You hit Ctrl+C! Awwww ok, bye bye [/bold yellow]")
+        sys.exit(0)
