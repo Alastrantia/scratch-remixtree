@@ -1,7 +1,23 @@
 [project]
-name = "scratch-remixtree"
+name = "remixtree-cli"
 version = "0.1.0"
-description = "Add your description here"
+description = "remake scratch's remix tree feature #BringBackRemixTrees"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+dependencies = [
+    "aiohttp",
+    "rich"
+]
+
+[project.urls]
+Homepage = "https://github.com/Alastrantia/scratch-remixtree"
+BugTracker = "https://github.com/Alastrantia/scratch-remixtree/issues"
+
+[project.scripts]
+remixtree = "remixtree_cli.main:main_sync"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -5,7 +5,7 @@ import aiohttp
 import argparse
 import io
 
-from node import RemixNodes 
+from .node import RemixNodes 
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, track
 from rich.panel import Panel
@@ -314,9 +314,13 @@ async def main():
         sys.exit(1)
 
 
-if __name__ == "__main__":
+def main_sync():
+    """a sync thing to make ts work with pypi"""
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        console.print("\n[bold yellow]⚠️ You hit Ctrl+C! Awwww ok, bye bye [/bold yellow]")
-        sys.exit(0)
+        console.print("\n[bold yellow]⚠️ You hit Ctrl+C! Awwwww bye bye[/bold yellow]")
+        raise SystemExit(0)
+
+if __name__ == "__main__":
+    main_sync()
