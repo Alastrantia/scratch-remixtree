@@ -1,8 +1,8 @@
 # scratch-remixtree 🫚
 
 [![PyPI version](https://img.shields.io/pypi/v/remixtree-cli)](https://pypi.org/project/remixtree-cli/)
-[![Python](https://img.shields.io/pypi/pyversions/remixtree-cli)](https://pypi.org/project/remixtree-cli/)
-[![License](https://img.shields.io/github/license/Alastrantia/scratch-remixtree)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Alas](https://img.shields.io/badge/made_by-alastrantia-purple)]()
 
 > A simple CLI to rebuild Scratch’s remix tree feature, which was removed sometime around Mid-October 2025.  
 > **#BringBackRemixTrees**
