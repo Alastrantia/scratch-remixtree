@@ -2,7 +2,7 @@ import sys
 import time
 
 import requests
-from node import *
+from api.node import *
 
 if len(sys.argv) == 1:
     print("usage: python script.py <PROJECT_ID>")
