@@ -208,7 +208,7 @@ async def main():
     
     # header
     console.print(Panel(
-        f"[bold cyan]The Scratch Remix Tree Builder (ID: {PROJECT_ID})[/bold cyan]",
+        f"[bold cyan]#BringBackRemixTrees (ID: {PROJECT_ID})[/bold cyan]",
         expand=False,
         border_style="cyan"
     ))
@@ -253,7 +253,7 @@ async def main():
             console.print()
             
             if root_remix_count > 5000:
-                console.print("[bold yellow]⚠️ Heads up:[/bold yellow] This tree is huge (>5k direct remixes)! It's gonna take a while.")
+                console.print("[bold yellow](Pray for the Scratch Servers)[/bold yellow] This tree is huge, it's gonna take a bit. In the meantime, follow Joshisaurio on Scratch!")
             
             # 3. build Tree (Re-entering Progress scope)
             with Progress(
