@@ -1,4 +1,4 @@
-name: Test remixtree CLI
+name: All Tests
 
 on:
   push:

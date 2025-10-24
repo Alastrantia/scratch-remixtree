@@ -2,14 +2,13 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/remixtree-cli)](https://pypi.org/project/remixtree-cli/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Alas](https://img.shields.io/badge/made_by-alastrantia-purple)]()
+[![Alastrantia](https://img.shields.io/badge/made_by-alastrantia-purple)](https://scratch.mit.edu/users/Alastrantia)
+[![All tests](https://github.com/Alastrantia/scratch-remixtree/actions/workflows/test-cli.yml/badge.svg)](https://github.com/Alastrantia/scratch-remixtree/actions/workflows/test-cli.yml)
 
 > A simple CLI to rebuild Scratch’s remix tree feature, which was removed sometime around Mid-October 2025.  
 > **#BringBackRemixTrees**
 
 ---
-
-## All tests are failing, please gimme some time to fix this
 
 ## What is this?
 
