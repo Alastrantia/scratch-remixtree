@@ -319,8 +319,11 @@ def main_sync():
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        console.print("\n[bold yellow]⚠️ You hit Ctrl+C! Awwwww bye bye[/bold yellow]")
-        raise SystemExit(0)
+        console.print("[bold yellow]⚠️ You hit Ctrl+C! Awwwww bye bye[/bold yellow]")
+        sys.exit(0)
+    except Exception as e:
+        console.print(f"[bold red]✗ SOMETHING BROKE:[/bold red] {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main_sync()
