@@ -58,3 +58,22 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 -o, --ouput:
     probably the most important flag, specify where the tree should be saved
 ```
+
+## Example Output
+```
+└── 1189258928
+    ├── 1214754181
+    ├── 1214779807
+    ├── 1214838754
+    ├── 1214857130
+    │   └── 1200011719
+    │   └── 1200011719
+    ├── 1214886381
+    ├── 1214926629
+    ├── 1215025153
+    ├── 1215026630
+    ├── 1215041586
+    ├── 1215121740
+```
+
+(Project names, authors and other visualization options will be added later)
