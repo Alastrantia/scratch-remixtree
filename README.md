@@ -61,19 +61,18 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 
 ## Example Output
 ```
-└── 1189258928
-    ├── 1214754181
-    ├── 1214779807
-    ├── 1214838754
-    ├── 1214857130
-    │   └── 1200011719
-    │   └── 1200011719
-    ├── 1214886381
-    ├── 1214926629
-    ├── 1215025153
-    ├── 1215026630
-    ├── 1215041586
-    ├── 1215121740
+└── root(1196834984)
+    ├── » planet b «(1198230426)
+    │   └── » planet b « remix(1212924547)
+    ├── Apex Construction (BB7 Entry)(1198230627)
+    ├── pinnacle constructions(1198232264)
+    ├── R1(1198238918)
+    │   └── R1 remix(1223273999)
+    ├── ⬠ equilux branding (1198261493)
+    ├── BB7 -  Keystone Works(1198288240)
+    ├── AEDIFI(1198372015)
+    ├── Mace - BB7 R1(1198407780)
+    ... 
 ```
 
-(Project names, authors and other visualization options will be added later)
+(Other visualization options will be added later)
