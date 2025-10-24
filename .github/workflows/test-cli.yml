@@ -44,9 +44,11 @@ jobs:
 
       - name: Check for errors
         run: |
-          # capture exit code
-          exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "CLI failed with exit code $exit_code"
+          # Run the CLI command and capture exit code
+          remixtree --help
+          $exit_code = $LASTEXITCODE
+
+          if ($exit_code -ne 0) {
+            Write-Host "CLI failed with exit code $exit_code"
             exit 1
-          fi
+          }
