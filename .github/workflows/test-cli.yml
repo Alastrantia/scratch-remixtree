@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: set up Python ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -25,30 +25,15 @@ jobs:
       - name: Install package
         run: |
           python -m pip install --upgrade pip
-          pip install -e .  # install your package in dev mode
+          pip install -e .
 
       - name: Test CLI command
+        shell: bash
         run: |
-          # check if the command exists
-          command -v remixtree || echo "Command not found"
-          
-          # run the CLI with --help to verify it works
           remixtree --help
 
-      - name: Test CLI with arguments (optional)
-        if: matrix.os == 'ubuntu-latest'  # only linux, must use other systems later too
+      - name: Test CLI with arguments
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
         run: |
-          # Example: test if it runs with help command
-          remixtree --help 
-          # replace with better cmd later
-
-      - name: Check for errors
-        run: |
-          # Run the CLI command and capture exit code
           remixtree --help
-          $exit_code = $LASTEXITCODE
-
-          if ($exit_code -ne 0) {
-            Write-Host "CLI failed with exit code $exit_code"
-            exit 1
-          }
