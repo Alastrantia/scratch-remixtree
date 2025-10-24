@@ -94,11 +94,11 @@ async def get_all_remixes(session, project_id, num_remixes):
     return all_remixes
 
 
-async def build_remix_tree(session, project_id, max_depth=None, current_depth=0):
+async def build_remix_tree(session, project_id, project_title, max_depth=None, current_depth=0):
     """the **recursive** function to construct the remix tree, did i mention it is recursive already?"""
     global total_children_count
     
-    node = RemixNodes(project_id)
+    node = RemixNodes(project_id, project_title)
     
     if max_depth is not None and current_depth >= max_depth:
         return node
@@ -118,9 +118,10 @@ async def build_remix_tree(session, project_id, max_depth=None, current_depth=0)
         child_tasks = []
         for remix in remixes:
             remix_id = remix["id"]
+            remix_title = remix["title"]
             total_children_count += 1
             child_tasks.append(
-                build_remix_tree(session, remix_id, max_depth, current_depth + 1)
+                build_remix_tree(session, remix_id, remix_title, max_depth, current_depth + 1)
             )
         
         children = await asyncio.gather(*child_tasks)
@@ -266,7 +267,7 @@ async def main():
                     total=None
                 )
                 start_time = time.perf_counter()
-                tree = await build_remix_tree(session, root, MAX_DEPTH)
+                tree = await build_remix_tree(session, root, "root", MAX_DEPTH)
                 end_time = time.perf_counter()
                 progress.update(task3, completed=True)
             

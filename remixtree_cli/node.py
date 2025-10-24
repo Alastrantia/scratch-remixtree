@@ -1,6 +1,7 @@
 class RemixNodes:
-    def __init__(self, project_id):
+    def __init__(self, project_id, title):
         self.project_id = project_id 
+        self.title = title
         self.children = []
 
     def add_child(self, child_node):
@@ -8,7 +9,7 @@ class RemixNodes:
 
     def print_tree(self, prefix="", is_last=True):
         connector = "└── " if is_last else "├── "
-        print(prefix + connector + str(self.project_id)) 
+        print(prefix + connector + str(self.title) + "(" + str(self.project_id) + ")") 
 
         prefix += "    " if is_last else "│   "
 
