@@ -1,6 +1,6 @@
 # scratch-remixtree 🫚
 
-[![PyPI version](https://img.shields.io/pypi/v/remixtree-cli)](https://pypi.org/project/remixtree-cli/)
+[![PyPI version](https://img.shields.io/pypi/v/remixtree)](https://pypi.org/project/remixtree/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Alastrantia](https://img.shields.io/badge/made_by-alastrantia-purple)](https://scratch.mit.edu/users/Alastrantia)
 [![All tests](https://github.com/Alastrantia/scratch-remixtree/actions/workflows/test-cli.yml/badge.svg)](https://github.com/Alastrantia/scratch-remixtree/actions/workflows/test-cli.yml)
@@ -34,12 +34,12 @@ This CLI fetches a project’s remixes and builds a tree showing how all the rem
 ### Recommended: using **pipx** (isolated, should-work):
 ```bash
 pip install --user pipx
-pipx install remixtree-cli
+pipx install remixtree
 ```
 ### Alternatively:
 
 ```
-pip install remixtree-cli
+pip install remixtree
 ```
 
 ## Basic Usage
