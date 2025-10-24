@@ -26,7 +26,7 @@ async def fetch_project_data(session, project_id):
         async with session.get(url) as response:
             if response.status == 404:
                 console.print(f"[bold red]✗ WHOOPS (404):[/bold red] Couldn't find project {project_id}. Maybe it's gone?")
-                sys.exit(1)
+                return None
             if response.status != 200:
                 console.print(f"[bold red]✗ BUMMER:[/bold red] API status {response.status} when trying to fetch data for {project_id}")
                 return None
