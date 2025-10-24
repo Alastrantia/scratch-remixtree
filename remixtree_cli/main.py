@@ -162,7 +162,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="a replacement for scratch's remix tree feature in the form of a CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="example: python tree_builder.py 123456789 -d 3 -o tree_output.txt"
+        epilog="example: remixtree 123456789 -d 3 -o tree_output.txt"
     )
     parser.add_argument(
         "project_id",
