@@ -10,6 +10,12 @@
 
 **Like this tool?** Star the repo to help others find it and make me feel good 🥺
 
+## Demo :DD
+
+<img src="demos/demo.gif" width="70%" alt="Small tree demo"><br>
+>Project Link: https://scratch.mit.edu/projects/948573479/  
+>Command: `remixtree 948573479 --output tree.txt --verbose`
+
 
 ## What is this?
 
@@ -77,12 +83,6 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
     ├── Mace - BB7 R1(1198407780)
     ... 
 ```
-
-## Demo :DD
-
-<img src="demos/demo.gif" width="70%" alt="Small tree demo"><br>
->Project Link: https://scratch.mit.edu/projects/948573479/  
->Command: `remixtree 948573479 --output tree.txt --verbose`
 
 ## Feature Tracker
 
