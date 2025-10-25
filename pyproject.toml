@@ -2,16 +2,18 @@
 name = "remixtree"
 dynamic = ["version"]
 description = "remake scratch's remix tree feature #BringBackRemixTrees"
-readme = "README.md"
+readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
 license = { text = "MIT" }
 
 dependencies = [
-    "aiohttp",
-    "rich"
+  "aiohttp",
+  "rich",
 ]
 
-authors = [{ name = "Alastrantia", email = "example@email.com" }]
+authors = [
+  { name = "Alastrantia", email = "example@email.com" },
+]
 
 [project.urls]
 Homepage = "https://github.com/Alastrantia/scratch-remixtree"
@@ -20,19 +22,17 @@ BugTracker = "https://github.com/Alastrantia/scratch-remixtree/issues"
 [project.scripts]
 remixtree = "remixtree_cli.main:main_sync"
 
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Build Tools",
+  "Topic :: Education",
+]
+
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages]
-names = ["remixtree"]
-
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Topic :: Software Development :: Build Tools",
-    "Topic :: Education",
-]
-
-readme = { file = "README.md", content-type = "text/markdown" }
+find = { where = ["."], include = ["remixtree*", "remixtree_cli*"], exclude = ["demos*", "tests*"] }
