@@ -1,6 +1,6 @@
 [project]
 name = "remixtree"
-version = "0.1.6"
+version = "0.1.7"
 description = "remake scratch's remix tree feature #BringBackRemixTrees"
 readme = "README.md"
 requires-python = ">=3.9"
