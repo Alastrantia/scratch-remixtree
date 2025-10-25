@@ -12,6 +12,11 @@ from rich.panel import Panel
 from datetime import timedelta
 # sorry yall but i felt like putting almost everything in one file today
 
+# force utf8 on windows cuz windows is extremely dumb it seems
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
 # make rich console
 console = Console()
 total_children_count = 0
