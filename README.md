@@ -21,6 +21,7 @@ This CLI fetches a project’s remixes and builds a tree showing how all the rem
 
 ## Features
 
+- Built with `rich`
 - Async, can create large trees decently fast
 - Optional verbose mode to go crazy
 - Save the full remix tree to a file if ya want to
@@ -78,3 +79,9 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 ```
 
 (Other visualization options will be added later)
+
+## Demo :DD
+
+><img src="demos/demo.gif" width="50%" alt="Small tree demo"><br>
+>Project Link: https://scratch.mit.edu/projects/948573479/  
+>Command: `remixtree 948573479 --output tree.txt --verbose`
