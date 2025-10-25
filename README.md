@@ -8,17 +8,16 @@
 > A simple CLI to rebuild Scratch’s remix tree feature, which was removed sometime around Mid-October 2025.  
 > **#BringBackRemixTrees**
 
-⭐ **Like this tool?** Star the repo to help others find it and make me feel good 🥺
+**Like this tool?** Star the repo to help others find it and make me feel good 🥺
 
 
 ## What is this?
 
-Scratch removed the remix tree feature without any warning 😭.  
-So, here we go again, in the form of a CLI
+Scratch removed the remix tree feature without any warning 
+So, here we go again, in the form of a CLI!
 
 This CLI fetches a project’s remixes and builds a tree showing how all the remixes connect, using the official scratch API.
 
----
 
 ## Features
 
@@ -87,15 +86,12 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 
 ## Feature Tracker
 
-### Implemented
 - [x] ASCII tree visualization
 - [x] Async fetching
 - [x] Depth limiting
 - [x] Verbose mode
 - [x] File output
 - [x] Color coding
-
-### Planned
 - [ ] Interactive tree navigation
 - [ ] Visual tree using graphviz
 - [ ] Export to JSON/CSV

@@ -32,8 +32,7 @@ jobs:
         run: |
           remixtree --help
 
-      - name: Test CLI with arguments
-        if: matrix.os == 'ubuntu-latest'
+      - name: Test CLI with griffpatch project
         shell: bash
         run: |
-          remixtree --help
+          remixtree 1211578513 --verbose
