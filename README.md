@@ -57,6 +57,8 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
     just try it, you'll see for yourself
 -o, --ouput:
     probably the most important flag, specify where the tree should be saved
+-c, --color:
+    enable color coding by depth (disabled by default), will use rich color formatting
 ```
 
 ## Example Output

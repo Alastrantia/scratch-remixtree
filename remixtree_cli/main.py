@@ -5,7 +5,7 @@ import aiohttp
 import argparse
 import io
 
-from .node import RemixNodes 
+from node import RemixNodes 
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, track
 from rich.panel import Panel
@@ -132,7 +132,7 @@ async def build_remix_tree(session, project_id, project_title, max_depth=None, c
     return node
 
 
-def get_tree_representation(tree_node):
+def get_tree_representation(tree_node, use_color=True):
     """
     a really ugly workaround that steals the stdoutput from RemixNodes.print_tree() 
     it works but it's uglyyyyyy iykyk
@@ -148,8 +148,8 @@ def get_tree_representation(tree_node):
         # 3. redirect stdout to the StringIO object
         sys.stdout = captured_output
         
-        # 4. call the method that prints to stdout
-        tree_node.print_tree()
+        # 4. call the method that prints to stdout WITH color parameter
+        tree_node.print_tree(use_color=use_color)
         
     finally:
         # 5. restore original stdout
@@ -193,6 +193,12 @@ def parse_args():
         default=None,
         help="path to a file to save the actual, full tree structure (e.g., tree.txt)."
     )
+    parser.add_argument(
+        "-c", "--color",
+        action="store_true",
+        default=False,
+        help="enable color coding by depth (disabled by default), will use rich color formatting"
+    )
     
     return parser.parse_args()
 
@@ -206,6 +212,7 @@ async def main():
     MAX_DEPTH = args.depth
     TIMEOUT = args.timeout
     OUTPUT_FILE = args.output
+    USE_COLOR = args.color
     
     # header
     console.print(Panel(
@@ -274,7 +281,7 @@ async def main():
             elapsed_time = end_time - start_time
             
             # final Results
-            tree_output = get_tree_representation(tree)
+            tree_output = get_tree_representation(tree, use_color=USE_COLOR)
             
             # print Final Status Panel
             console.print()
