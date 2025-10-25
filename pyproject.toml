@@ -5,20 +5,13 @@ description = "remake scratch's remix tree feature #BringBackRemixTrees"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
 license = { text = "MIT" }
-
 dependencies = [
   "aiohttp",
   "rich",
 ]
-
 authors = [
   { name = "Alastrantia", email = "example@email.com" },
 ]
-
-[project.urls]
-Homepage = "https://github.com/Alastrantia/scratch-remixtree"
-BugTracker = "https://github.com/Alastrantia/scratch-remixtree/issues"
-
 classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
@@ -26,6 +19,10 @@ classifiers = [
   "Topic :: Software Development :: Build Tools",
   "Topic :: Education",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Alastrantia/scratch-remixtree"
+BugTracker = "https://github.com/Alastrantia/scratch-remixtree/issues"
 
 [project.scripts]
 remixtree = "remixtree_cli.main:main_sync"
