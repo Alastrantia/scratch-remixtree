@@ -29,7 +29,7 @@ async def get_root_id(session, project_id):
     return project_id
 
 
-async def fetch_remixes_batch(session, url, project_id, offset, verbose=False):
+async def fetch_remixes_batch(session, url, project_id, offset, progress=None, verbose=False):
     """takes a batch of remixes from the scratch api, obvisously"""
     import time
     start_time = time.perf_counter()
@@ -38,20 +38,27 @@ async def fetch_remixes_batch(session, url, project_id, offset, verbose=False):
             end_time = time.perf_counter()
             if verbose:
                 elapsed = end_time - start_time
-                console.print(f"[dim]  [Batch][/dim] Got a remix chunk for {project_id} (offset {offset}), took {elapsed:.4f}s")
+                msg = f"[dim]  [Batch][/dim] Got a remix chunk for {project_id} (offset {offset}), took {elapsed:.4f}s"
+                if progress:
+                    progress.console.print(msg)
+                else:
+                    console.print(msg)
             
             if response.status == 200:
                 return await response.json()
             return []
     except Exception as e:
-        console.print(f"[bold red]✗ ERROR GETTING BATCH:[/bold red] Failed to fetch chunk for {project_id}: {e}")
+        msg = f"[bold red]✗ ERROR GETTING BATCH:[/bold red] Failed to fetch chunk for {project_id}: {e}"
+        if progress:
+            progress.console.print(msg)
+        else:
+            console.print(msg)
         return []
 
 
-async def get_all_remixes(session, project_id, num_remixes, verbose=False):
-    """Sets up all the quick, concurrent tasks to fetch remixes for one project."""
+async def get_all_remixes(session, project_id, num_remixes, progress=None, verbose=False):
+    """sets up all the quic tasks to fetch remixes for a project"""
     import asyncio
-    from rich.progress import track
     
     if num_remixes == 0:
         return []
@@ -59,19 +66,20 @@ async def get_all_remixes(session, project_id, num_remixes, verbose=False):
     tasks = []
     for offset in range(0, num_remixes, 40):
         url = f"https://api.scratch.mit.edu/projects/{project_id}/remixes?limit=40&offset={offset}"
-        tasks.append(fetch_remixes_batch(session, url, project_id, offset, verbose))
+        tasks.append(fetch_remixes_batch(session, url, project_id, offset, progress=progress, verbose=verbose))
     
-    if len(tasks) > 5 and not verbose:
+    if len(tasks) > 5 and not verbose and progress:
+        task = progress.add_task(
+            f"  [cyan]Grabbing {num_remixes} remixes for {project_id}...",
+            total=len(tasks)
+        )
         results = []
-        for future in track(
-            asyncio.as_completed(tasks), 
-            total=len(tasks), 
-            description=f"  [cyan]Grabbing {num_remixes} remixes for {project_id}...",
-            console=console
-        ):
+        for future in asyncio.as_completed(tasks):
             batch = await future
             if batch:
                 results.append(batch)
+            progress.advance(task)
+        progress.remove_task(task)
     else:
         results = await asyncio.gather(*tasks)
         

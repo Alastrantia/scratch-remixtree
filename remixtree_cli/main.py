@@ -88,7 +88,7 @@ async def main():
                     total=None
                 )
                 start_time = time.perf_counter()
-                tree = await build_remix_tree(session, root, "root", MAX_DEPTH, verbose=VERBOSE)
+                tree = await build_remix_tree(session, root, "root", MAX_DEPTH, progress=progress, verbose=VERBOSE)
                 end_time = time.perf_counter()
                 progress.update(task3, completed=True)
             
