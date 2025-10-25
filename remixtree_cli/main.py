@@ -5,7 +5,7 @@ import aiohttp
 import argparse
 import io
 
-from node import RemixNodes 
+from .node import RemixNodes 
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, track
 from rich.panel import Panel
