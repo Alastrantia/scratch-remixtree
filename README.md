@@ -19,7 +19,7 @@
 
 ## What is this?
 
-Scratch removed the remix tree feature without any warning 
+Scratch removed the remix tree feature without any warning... 
 So, here we go again, in the form of a CLI!
 
 This CLI fetches a project’s remixes and builds a tree showing how all the remixes connect, using the official scratch API.
@@ -97,3 +97,9 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 - [ ] Export to JSON/CSV
 - [ ] Web interface
 - [ ] Batch processing
+
+## Other people have made similar, maybe even cooler things!
+- redspacecat made retree: https://retree.quuq.dev/
+- CST1229 made treemix: https://cst1229.eu.org/treemix/
+
+Check those out too!
