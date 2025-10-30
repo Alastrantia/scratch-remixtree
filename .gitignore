@@ -6,3 +6,5 @@ venv
 .vscode
 *.egg-info/
 dist
+.wrangler
+node_modules

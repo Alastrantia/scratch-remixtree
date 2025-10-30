@@ -5,7 +5,7 @@ console = Console()
 
 async def fetch_project_data(session, project_id):
     """get basic info for a scratch project"""
-    url = f"https://api.scratch.mit.edu/projects/{project_id}"
+    url = f"https://sapi.alass.dev/projects/{project_id}"
     try:
         async with session.get(url) as response:
             if response.status == 404:
@@ -65,7 +65,7 @@ async def get_all_remixes(session, project_id, num_remixes, progress=None, verbo
     
     tasks = []
     for offset in range(0, num_remixes, 40):
-        url = f"https://api.scratch.mit.edu/projects/{project_id}/remixes?limit=40&offset={offset}"
+        url = f"https://sapi.alass.dev/projects/{project_id}/remixes?limit=40&offset={offset}"
         tasks.append(fetch_remixes_batch(session, url, project_id, offset, progress=progress, verbose=verbose))
     
     if len(tasks) > 5 and not verbose and progress:
