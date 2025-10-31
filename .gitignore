@@ -7,4 +7,3 @@ venv
 *.egg-info/
 dist
 .wrangler
-node_modules
