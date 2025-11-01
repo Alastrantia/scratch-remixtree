@@ -8,7 +8,6 @@ class RemixNodes:
         self.children.append(child_node)
 
     def print_tree(self, prefix="", is_last=True, depth=0, use_color=True):
-        
         # note to later me: find a way to get color into text files without showing the rich format codes...
         DEPTH_COLORS = ["cyan", "green", "yellow", "magenta", "blue", "red", "white"]
         
