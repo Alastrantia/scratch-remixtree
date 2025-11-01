@@ -1,0 +1,43 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #fafafa;
+  color: #333;
+  padding: 1rem;
+}
+
+main {
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+.input-area {
+  margin-bottom: 1rem;
+}
+
+input {
+  padding: 0.5rem;
+  width: 200px;
+  margin-right: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+ul {
+  text-align: left;
+  list-style-type: none;
+  padding-left: 1rem;
+  border-left: 1px solid #ccc;
+}
+
+li {
+  margin: 0.3rem 0;
+}
+
+.author {
+  color: gray;
+  font-size: 0.9em;
+}

@@ -1,23 +1,42 @@
 export default {
-  async fetch(request) {
-    const targetUrl = new URL(request.url);
-    targetUrl.hostname = "api.scratch.mit.edu";
-    
-    // give it to the real one
-    const response = await fetch(targetUrl, request);
-    
-    // copy paste the actual response in a new Response object called corsResponse
-    const corsResponse = new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-    });
-    
-    // add corsies so it shouuuuuuld work from anywhere
-    corsResponse.headers.set('Access-Control-Allow-Origin', '*');
-    corsResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    corsResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
-    return corsResponse;
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    const target = `https://api.scratch.mit.edu${url.pathname}${url.search}`;
+
+    const cache = caches.default;
+    let response = await cache.match(request); // try retrieving the response from cloudflare cache
+
+    if (!response) {
+      // if not cached, fetch from the real api
+      response = await fetch(target, {
+        headers: { "User-Agent": "Scratch-RemixTree-Proxy" },
+      });
+
+      // copy body + headers
+      const corsResponse = new Response(await response.text(), {
+        status: response.status,
+        statusText: response.statusText,
+      });
+
+      corsResponse.headers.set("Access-Control-Allow-Origin", "*");
+      corsResponse.headers.set(
+        "Access-Control-Allow-Methods",
+        "GET,POST,OPTIONS"
+      );
+      corsResponse.headers.set("Access-Control-Allow-Headers", "*");
+
+      // cf edge cache
+      corsResponse.headers.set(
+        "Cache-Control",
+        "public, s-maxage=86400, stale-while-revalidate=3600"
+      );
+
+      // store in there
+      ctx.waitUntil(cache.put(request, corsResponse.clone()));
+
+      response = corsResponse;
+    }
+
+    return response;
   },
 };
