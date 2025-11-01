@@ -7,8 +7,8 @@ class RemixNodes:
     def add_child(self, child_node):
         self.children.append(child_node)
 
-    def print_tree(self, prefix="", is_last=True, depth=0, use_color=True):
-        # note to later me: find a way to get color into text files without showing the rich format codes...
+    def generate_tree(self, prefix="", is_last=True, depth=0, use_color=True):
+        # should i remove the color thing? it's somewhat useless
         DEPTH_COLORS = ["cyan", "green", "yellow", "magenta", "blue", "red", "white"]
         
         connector = "└── " if is_last else "├── "
@@ -18,9 +18,11 @@ class RemixNodes:
             color = DEPTH_COLORS[depth % len(DEPTH_COLORS)]
             node_text = f"[{color}]{node_text}[/{color}]"
         
-        print(prefix + connector + node_text)
+        result = prefix + connector + node_text + "\n"
         
-        prefix += "    " if is_last else "│   "
+        new_prefix = prefix + ("    " if is_last else "│   ")
         
         for i, child in enumerate(self.children):
-            child.print_tree(prefix, i == len(self.children) - 1, depth + 1, use_color)
+            result += child.generate_tree(new_prefix, i == len(self.children) - 1, depth + 1, use_color)
+        
+        return result

@@ -1,7 +1,6 @@
 from .tree_builder import build_remix_tree
 from .node import RemixNodes
 from .api import get_root_id, fetch_project_data
-from .ugly_stuff import get_tree_representation
 import aiohttp
 import asyncio
 
@@ -17,8 +16,4 @@ def build_tree(project_id, max_depth=None):
     """sync wrapper"""
     return asyncio.run(build_tree_async(project_id, max_depth))
 
-def node_to_text(node):
-    """convert node object into plaintext with special unicode chars"""
-    return get_tree_representation(node, use_color=False)
-
-__all__ = ['build_tree', 'build_tree_async', 'RemixNodes', 'node_to_text']
+__all__ = ['build_tree', 'build_tree_async', 'RemixNodes']

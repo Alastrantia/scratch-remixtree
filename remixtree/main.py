@@ -7,7 +7,6 @@ import io
 
 from .api import get_root_id, fetch_project_data
 from .tree_builder import build_remix_tree
-from .ugly_stuff import get_tree_representation
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.panel import Panel
@@ -99,7 +98,7 @@ async def main():
             
             total_children_count = count_nodes(tree)
             
-            tree_output = get_tree_representation(tree, use_color=USE_COLOR)
+            tree_output = tree.generate_tree(use_color=USE_COLOR)
             
             console.print()
             panel_content = (
