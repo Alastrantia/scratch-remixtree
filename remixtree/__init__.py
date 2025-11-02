@@ -4,16 +4,16 @@ from .api import get_root_id, fetch_project_data
 import aiohttp
 import asyncio
 
-async def build_tree_async(project_id, max_depth=None, timeout=300):
+async def build_tree_async(project_id, max_depth=None, timeout=300, progress_callback=None):
     """async function to get tree without CLI integration"""
     timeout_config = aiohttp.ClientTimeout(total=timeout)
     async with aiohttp.ClientSession(timeout=timeout_config) as session:
         root = await get_root_id(session, project_id)
-        tree = await build_remix_tree(session, root, "root", max_depth, progress=None, verbose=False)
+        tree = await build_remix_tree(session, root, "root", max_depth, progress=None, verbose=False, on_node_completed=progress_callback)
         return tree
 
-def build_tree(project_id, max_depth=None):
+def build_tree(project_id, max_depth=None, timeout=300, progress_callback=None):
     """sync wrapper"""
-    return asyncio.run(build_tree_async(project_id, max_depth))
+    return asyncio.run(build_tree_async(project_id, max_depth, timeout=timeout, progress_callback=progress_callback))
 
 __all__ = ['build_tree', 'build_tree_async', 'RemixNodes']
