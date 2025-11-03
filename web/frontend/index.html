@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>scratch-remixtree</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>scratch-remixtree</h1>
+            <p>explore how projects grow and more, just like before</p>
+            <span class="hashtag">#BringBackRemixTrees</span>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <label for="projectId">Scratch Project ID</label>
+                    <input type="text" id="projectId" placeholder="e.g., 1223809053">
+                </div>
+                <button id="buildBtn" onclick="buildTree()">Build Tree</button>
+            </div>
+        </div>
+
+        <div id="console" class="console"></div>
+
+        <div class="info-section">
+            <h2>How It Works</h2>
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span class="expandable-title">What is a Remix Tree?</span>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <p>A remix tree visualizes the genealogy of Scratch projects. When someone remixes a project, they create a branch in the tree. This tool reconstructs these relationships to show how creativity spreads through the Scratch community.</p>
+                    <p>Scratch removed this feature in mid-October 2024, so this tool brings it back using the official Scratch API.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made by <a href="https://scratch.mit.edu/users/Alastrantia" target="_blank">Alastrantia</a> | <a href="https://github.com/Alastrantia/scratch-remixtree" target="_blank">View on GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

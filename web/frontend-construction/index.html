@@ -4,21 +4,76 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>scratch-remixtree</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>scratch-remixtree</h1>
-
-    <div class="input-area">
-      <input id="projectId" type="text" placeholder="Enter Scratch project ID">
-      <button id="buildBtn">Build Tree</button>
+  <div class="container">
+    <div class="header">
+      <h1>scratch-remixtree</h1>
+      <p>Rebuild Scratch's removed remix tree feature</p>
     </div>
 
-    <div id="status"></div>
-    <div id="treeContainer"></div>
-  </main>
+    <div class="card">
+      <div class="input-section">
+        <input 
+          type="text" 
+          id="projectId" 
+          placeholder="Enter Scratch project ID (e.g., 948573479)"
+          value="948573479"
+        />
+        <button class="button" id="buildBtn">Build Tree</button>
+      </div>
 
+      <button class="options-toggle" id="optionsToggle">Show advanced options</button>
+
+      <div class="advanced-options" id="advancedOptions">
+        <h3>Advanced Options</h3>
+        <div class="controls">
+          <div class="control-group">
+            <label>
+              Max Depth: <span class="depth-value" id="depthValue">5</span>
+            </label>
+            <input type="range" id="depthSlider" min="1" max="10" value="5" />
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section" id="progressSection">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Building tree...</div>
+      </div>
+
+      <div class="stats" id="stats" style="display: none;">
+        <div class="stat-card">
+          <div class="stat-value" id="totalProjects">0</div>
+          <div class="stat-label">Total Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="maxDepthReached">0</div>
+          <div class="stat-label">Max Depth</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="buildTime">0s</div>
+          <div class="stat-label">Build Time</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tree-container" id="treeContainer" style="display: none;">
+      <div class="card">
+        <div class="tree-actions">
+          <button id="expandAll">Expand All</button>
+          <button id="collapseAll">Collapse All</button>
+          <button id="downloadBtn">Download as Text</button>
+        </div>
+        <div class="tree" id="treeOutput"></div>
+      </div>
+    </div>
+
+    <div id="error"></div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

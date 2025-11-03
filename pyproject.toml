@@ -35,4 +35,4 @@ build-backend = "setuptools.build_meta"
 # this shoouuuuuld get the version from git tagging
 
 [tool.setuptools.packages]
-find = { where = ["."], include = ["remixtree*", "remixtree_cli*"], exclude = ["demos*", "tests*"] }
+find = { where = ["."], include = ["remixtree*", "remixtree_cli*"], exclude = ["demos*", "tests*", "web*"] }
