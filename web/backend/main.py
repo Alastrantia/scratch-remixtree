@@ -173,8 +173,6 @@ async def get_tree(project_id: int, max_depth: int = None):
 async def health():
     return {"status": "healthy"}
 
-# for vercel
-app = app
 
 if __name__ == "__main__":
     import uvicorn
