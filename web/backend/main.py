@@ -9,10 +9,10 @@ from remixtree.node import RemixNodes
 
 app = FastAPI(title="Scratch RemixTree API")
 
-# CORS for frontend
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # adjust in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,18 +31,18 @@ async def root():
 @app.get("/build/{project_id}")
 async def build_tree_stream(project_id: int, max_depth: int = None):
     """
-    Stream tree building progress using Server-Sent Events (SSE)
+    stream tree building progress using SSE
     """
     async def event_generator():
         try:
-            # Create a queue for progress updates
+            # create a queue for progress updates
             queue = asyncio.Queue()
             node_count = 0
             
-            # Send initial status
+            # send start message
             yield f"data: {json.dumps({'type': 'status', 'message': 'Starting tree build...'})}\n\n"
             
-            # Progress callback that puts updates in the queue
+            # progress callback that puts updates in the queue
             async def progress_callback(node, depth, status):
                 nonlocal node_count
                 node_count += 1
@@ -60,7 +60,7 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
                 }
                 await queue.put(event_data)
             
-            # Start building the tree in a background task
+            # start building the tree in a background task
             async def build_task():
                 try:
                     tree = await build_tree_async(
@@ -68,27 +68,27 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
                         max_depth=max_depth,
                         progress_callback=progress_callback
                     )
-                    # Signal completion with the tree
+                    # signal completion with the tree
                     await queue.put(('complete', tree, node_count))
                 except Exception as e:
-                    # Signal error
+                    # signal error
                     await queue.put(('error', str(e)))
             
-            # Start the build task
+            # start the build task
             task = asyncio.create_task(build_task())
             
-            # Stream updates from the queue
+            # stream updates from the queue
             while True:
                 try:
-                    # Wait for updates with a timeout to keep connection alive
+                    # wait for updates with a timeout to keep connection alive
                     update = await asyncio.wait_for(queue.get(), timeout=1.0)
                     
-                    # Check if it's a completion or error signal
+                    # check if it's a completion or error signal
                     if isinstance(update, tuple):
                         if update[0] == 'complete':
                             _, tree, total = update
                             
-                            # Convert tree to dict
+                            # convert tree to dict
                             def tree_to_dict(node: RemixNodes):
                                 return {
                                     'id': node.project_id,
@@ -115,7 +115,7 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
                             yield f"data: {json.dumps(error_data)}\n\n"
                             break
                     else:
-                        # Regular progress update
+                        # normal progress update
                         yield f"data: {json.dumps(update)}\n\n"
                 
                 except asyncio.TimeoutError:
@@ -123,7 +123,7 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
                     yield ": keepalive\n\n"
                     continue
             
-            # Wait for the task to complete
+            # wait for it to complete
             await task
             
         except Exception as e:
@@ -139,14 +139,14 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
         headers={
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
-            "X-Accel-Buffering": "no",  # Disable nginx buffering
+            "X-Accel-Buffering": "no",  # no buffer from nginx
         }
     )
 
 @app.get("/tree/{project_id}")
 async def get_tree(project_id: int, max_depth: int = None):
     """
-    Get complete tree as JSON (no streaming)
+    get complete tree as JSON (no streaming) :sob:
     """
     try:
         tree = await build_tree_async(project_id, max_depth=max_depth)

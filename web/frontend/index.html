@@ -26,6 +26,32 @@
 
         <div id="console" class="console"></div>
 
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="totalProjects">0</div>
+                <div class="stat-label">Total Projects</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="maxDepthReached">0</div>
+                <div class="stat-label">Max Depth</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="buildTime">0s</div>
+                <div class="stat-label">Build Time</div>
+            </div>
+        </div>
+
+        <div class="tree-container" id="treeContainer" style="display: none;">
+            <div class="tree-card">
+                <div class="tree-actions">
+                    <button id="expandAll">Expand All</button>
+                    <button id="collapseAll">Collapse All</button>
+                    <button id="downloadBtn">Download as Text</button>
+                </div>
+                <div class="tree" id="treeOutput"></div>
+            </div>
+        </div>
+
         <div class="info-section">
             <h2>How It Works</h2>
             <div class="expandable">
