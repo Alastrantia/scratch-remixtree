@@ -7,6 +7,8 @@ import aiohttp
 from remixtree import build_tree_async
 from remixtree.node import RemixNodes
 
+## THIS IS CURRENTLY ON RENDER FREE PLAN WITH 512mb ram and 0.1 cpu...
+
 app = FastAPI(title="Scratch RemixTree API")
 
 # CORS

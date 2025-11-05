@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://backend.alass.dev";
 let eventSource = null;
 let streamClosedByClient = false;
 let treeData = null;

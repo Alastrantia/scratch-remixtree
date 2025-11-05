@@ -1,76 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scratch-remixtree</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="hero">
-            <h1>scratch-remixtree</h1>
-            <p>explore how projects grow and more, just like before</p>
-            <span class="hashtag">#BringBackRemixTrees</span>
-        </div>
+      <div class="hero">
+        <h1>scratch-remixtree</h1>
+        <p>explore how projects grow and more, just like before</p>
+        <span class="hashtag">#BringBackRemixTrees</span>
+      </div>
 
-        <div class="input-section">
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <label for="projectId">Scratch Project ID</label>
-                    <input type="text" id="projectId" placeholder="e.g., 1223809053">
-                </div>
-                <button id="buildBtn" onclick="buildTree()">Build Tree</button>
-            </div>
+      <div class="input-section">
+        <div class="input-group">
+          <div class="input-wrapper">
+            <label for="projectId">Scratch Project ID</label>
+            <input type="text" id="projectId" placeholder="e.g., 1223809053" />
+          </div>
+          <button id="buildBtn" onclick="buildTree()">Build Tree</button>
         </div>
+      </div>
 
-        <div id="console" class="console"></div>
+      <div id="console" class="console"></div>
 
-        <div class="stats" id="stats" style="display: none;">
-            <div class="stat-card">
-                <div class="stat-value" id="totalProjects">0</div>
-                <div class="stat-label">Total Projects</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="maxDepthReached">0</div>
-                <div class="stat-label">Max Depth</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="buildTime">0s</div>
-                <div class="stat-label">Build Time</div>
-            </div>
+      <div class="stats" id="stats" style="display: none">
+        <div class="stat-card">
+          <div class="stat-value" id="totalProjects">0</div>
+          <div class="stat-label">Total Projects</div>
         </div>
-
-        <div class="tree-container" id="treeContainer" style="display: none;">
-            <div class="tree-card">
-                <div class="tree-actions">
-                    <button id="expandAll">Expand All</button>
-                    <button id="collapseAll">Collapse All</button>
-                    <button id="downloadBtn">Download as Text</button>
-                </div>
-                <div class="tree" id="treeOutput"></div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-value" id="maxDepthReached">0</div>
+          <div class="stat-label">Max Depth</div>
         </div>
-
-        <div class="info-section">
-            <h2>How It Works</h2>
-            <div class="expandable">
-                <div class="expandable-header" onclick="toggleExpandable(this)">
-                    <span class="expandable-title">What is a Remix Tree?</span>
-                    <span class="expandable-icon">▼</span>
-                </div>
-                <div class="expandable-content">
-                    <p>A remix tree visualizes the genealogy of Scratch projects. When someone remixes a project, they create a branch in the tree. This tool reconstructs these relationships to show how creativity spreads through the Scratch community.</p>
-                    <p>Scratch removed this feature in mid-October 2024, so this tool brings it back using the official Scratch API.</p>
-                </div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-value" id="buildTime">0s</div>
+          <div class="stat-label">Build Time</div>
         </div>
+      </div>
+
+      <div class="tree-container" id="treeContainer" style="display: none">
+        <div class="tree-card">
+          <div class="tree-actions">
+            <button id="expandAll">Expand All</button>
+            <button id="collapseAll">Collapse All</button>
+            <button id="downloadBtn">Download as Text</button>
+          </div>
+          <div class="tree" id="treeOutput"></div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h2>FAQ</h2>
+        <div class="expandable">
+          <div class="expandable-header" onclick="toggleExpandable(this)">
+            <span class="expandable-title">What is a Remix Tree?</span>
+            <span class="expandable-icon">▼</span>
+          </div>
+          <div class="expandable-content">
+            <p>
+              A remix tree visualizes the genealogy of Scratch projects. When
+              someone remixes a project, they create a branch in the tree. This
+              tool reconstructs these relationships to show how creativity
+              spreads through the Scratch community.
+            </p>
+            <p>
+              Scratch removed this feature in mid-October 2025, so this tool
+              brings it back using the official Scratch API.
+            </p>
+          </div>
+        </div>
+        <div class="expandable">
+          <div class="expandable-header" onclick="toggleExpandable(this)">
+            <span class="expandable-title">How does this work, even if the original tree was removed?</span>
+            <span class="expandable-icon">▼</span>
+          </div>
+          <div class="expandable-content">
+            <p>
+              When you click "Build Tree," the browser sends the Project ID to
+              our backend API. The backend then performs a deep,
+              recursive search on the Scratch API, making tons of requests in a short time, starting from
+              the original project and branching out to all its remixes. This is also part of the reason why it can be slow at times for huge & deep trees.
+            </p>
+            <p>
+              To keep the process transparent and engage the user, the server
+              uses SSE (Server Sent Events) to stream realtime updates
+              directly to the "console". This way, you can see every project
+              being processed as the tree is built, no matter how large it is!
+            </p>
+            <p>
+              The backend automatically employs asynchronous fetching to
+              process multiple branches at time same time, making the process a lot
+              faster than if it were done sequentially. (Trust me, you DO NOT wanna make the Appel remix tree synchronously)
+            </p>
+          </div>
+        </div>
+        <div class="expandable">
+          <div class="expandable-header" onclick="toggleExpandable(this)">
+            <span class="expandable-title"
+              >Technical Details</span
+            >
+            <span class="expandable-icon">▼</span>
+          </div>
+          <div class="expandable-content">
+            <p>
+              The backend is built using Python and FastAPI. It uses the remixtree package on PyPI and runs on a free Render instance, which can sometimes cause issues but is the only really "free" option for me right now.
+              The frontend, meaning this page you are on right now, is hosted on Cloudflare Pages with no limit and can be accessed from anywhere in the world quite fast.
+              All code is open source on GitHub, the subdirectories frontend/backend inside of /web!
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <p>Made by <a href="https://scratch.mit.edu/users/Alastrantia" target="_blank">Alastrantia</a> | <a href="https://github.com/Alastrantia/scratch-remixtree" target="_blank">View on GitHub</a></p>
+      <p>
+        Made by
+        <a href="https://scratch.mit.edu/users/Alastrantia" target="_blank"
+          >Alastrantia</a
+        >
+        |
+        <a
+          href="https://github.com/Alastrantia/scratch-remixtree"
+          target="_blank"
+          >View on GitHub</a
+        >
+      </p>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
