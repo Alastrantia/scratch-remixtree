@@ -1,0 +1,383 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: white;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  color: #333;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.header p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.card {
+  background: hsl(0, 0%, 97%);
+  border-radius: 8px;
+  padding: 2rem;
+  border: 1px solid hsl(0, 0%, 85%);
+  margin-bottom: 1.5rem;
+}
+
+.input-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.75rem 1rem;
+  border: 1px solid hsl(0, 0%, 85%);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: hsl(260, 60%, 60%);
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  background: hsl(260, 60%, 60%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.button:active {
+  opacity: 0.8;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.options-toggle {
+  background: none;
+  border: none;
+  color: hsl(225, 15%, 40%);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  margin-top: 0.5rem;
+}
+
+.options-toggle:hover {
+  color: hsl(260, 60%, 60%);
+}
+
+.advanced-options {
+  display: none;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid hsl(0, 0%, 85%);
+}
+
+.advanced-options.visible {
+  display: block;
+}
+
+.advanced-options h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: hsl(225, 15%, 40%);
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: hsl(225, 15%, 40%);
+  font-size: 0.9rem;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: hsl(0, 0%, 85%);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: hsl(260, 60%, 60%);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: hsl(260, 60%, 60%);
+  cursor: pointer;
+  border: none;
+}
+
+.depth-value {
+  display: inline-block;
+  background: hsl(260, 60%, 60%);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.progress-section {
+  display: none;
+  margin-top: 1.5rem;
+}
+
+.progress-section.active {
+  display: block;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: hsl(0, 0%, 85%);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: hsl(260, 60%, 60%);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.progress-text {
+  text-align: center;
+  color: hsl(225, 15%, 40%);
+  font-size: 0.9rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.stat-card {
+  background: hsl(0, 0%, 97%);
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid hsl(0, 0%, 85%);
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: hsl(260, 60%, 60%);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: hsl(225, 15%, 40%);
+  margin-top: 0.25rem;
+}
+
+.tree-container {
+  margin-top: 2rem;
+}
+
+.tree-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tree-actions button {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid hsl(0, 0%, 85%);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: hsl(225, 15%, 40%);
+}
+
+.tree-actions button:hover {
+  background: hsl(0, 0%, 97%);
+  border-color: hsl(260, 60%, 60%);
+}
+
+.tree {
+  background: hsl(0, 0%, 98%);
+  border-radius: 4px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid hsl(0, 0%, 85%);
+}
+
+.tree ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tree ul ul {
+  padding-left: 1.5rem;
+  margin-top: 0.25rem;
+  border-left: 1px solid hsl(0, 0%, 85%);
+}
+
+.tree li {
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.tree-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid hsl(0, 0%, 85%);
+  cursor: pointer;
+}
+
+.tree-node:hover {
+  border-color: hsl(260, 60%, 60%);
+}
+
+.tree-node.depth-0 {
+  border-left: 3px solid hsl(260, 60%, 60%);
+}
+.tree-node.depth-1 {
+  border-left: 3px solid hsl(225, 15%, 40%);
+}
+.tree-node.depth-2 {
+  border-left: 3px solid hsl(260, 60%, 70%);
+}
+.tree-node.depth-3 {
+  border-left: 3px solid hsl(144, 45%, 36%);
+}
+.tree-node.depth-4 {
+  border-left: 3px solid hsl(225, 15%, 50%);
+}
+
+.node-title {
+  font-weight: 500;
+  color: #333;
+}
+
+.node-author {
+  color: hsl(225, 15%, 40%);
+  font-size: 0.85rem;
+}
+
+.node-count {
+  background: hsl(0, 0%, 93%);
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: hsl(225, 15%, 40%);
+}
+
+.toggle-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: hsl(260, 60%, 60%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.collapsed > ul {
+  display: none;
+}
+
+.error {
+  background: #fee;
+  border: 1px solid hsl(0, 0%, 85%);
+  color: #c33;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .input-section {
+    flex-direction: column;
+  }
+
+  input[type="text"] {
+    width: 100%;
+  }
+}
