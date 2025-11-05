@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-9KPLM9W06X"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-9KPLM9W06X");
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scratch-remixtree</title>
@@ -74,41 +89,65 @@
         </div>
         <div class="expandable">
           <div class="expandable-header" onclick="toggleExpandable(this)">
-            <span class="expandable-title">How does this work, even if the original tree was removed?</span>
-            <span class="expandable-icon">▼</span>
-          </div>
-          <div class="expandable-content">
-            <p>
-              When you click "Build Tree," the browser sends the Project ID to
-              our backend API. The backend then performs a deep,
-              recursive search on the Scratch API, making tons of requests in a short time, starting from
-              the original project and branching out to all its remixes. This is also part of the reason why it can be slow at times for huge & deep trees.
-            </p>
-            <p>
-              To keep the process transparent and engage the user, the server
-              uses SSE (Server Sent Events) to stream realtime updates
-              directly to the "console". This way, you can see every project
-              being processed as the tree is built, no matter how large it is!
-            </p>
-            <p>
-              The backend automatically employs asynchronous fetching to
-              process multiple branches at time same time, making the process a lot
-              faster than if it were done sequentially. (Trust me, you DO NOT wanna make the Appel remix tree synchronously)
-            </p>
-          </div>
-        </div>
-        <div class="expandable">
-          <div class="expandable-header" onclick="toggleExpandable(this)">
             <span class="expandable-title"
-              >Technical Details</span
+              >How does this work, even if the original tree was removed?</span
             >
             <span class="expandable-icon">▼</span>
           </div>
           <div class="expandable-content">
             <p>
-              The backend is built using Python and FastAPI. It uses the remixtree package on PyPI and runs on a free Render instance, which can sometimes cause issues but is the only really "free" option for me right now.
-              The frontend, meaning this page you are on right now, is hosted on Cloudflare Pages with no limit and can be accessed from anywhere in the world quite fast.
-              All code is open source on GitHub, the subdirectories frontend/backend inside of /web!
+              When you click "Build Tree," the browser sends the Project ID to
+              our backend API. The backend then performs a deep, recursive
+              search on the Scratch API, making tons of requests in a short
+              time, starting from the original project and branching out to all
+              its remixes. This is also part of the reason why it can be slow at
+              times for huge & deep trees.
+            </p>
+            <p>
+              To keep the process transparent and engage the user, the server
+              uses SSE (Server Sent Events) to stream realtime updates directly
+              to the "console". This way, you can see every project being
+              processed as the tree is built, no matter how large it is!
+            </p>
+            <p>
+              The backend automatically employs asynchronous fetching to process
+              multiple branches at time same time, making the process a lot
+              faster than if it were done sequentially. (Trust me, you DO NOT
+              wanna make the Appel remix tree synchronously)
+            </p>
+          </div>
+        </div>
+        <div class="expandable">
+          <div class="expandable-header" onclick="toggleExpandable(this)">
+            <span class="expandable-title">Technical Details</span>
+            <span class="expandable-icon">▼</span>
+          </div>
+          <div class="expandable-content">
+            <p>
+              The backend is built using Python and FastAPI. It uses the
+              remixtree package on PyPI and runs on a free Render instance,
+              which can sometimes cause issues but is the only really "free"
+              option for me right now. The frontend, meaning this page you are
+              on right now, is hosted on Cloudflare Pages with no limit and can
+              be accessed from anywhere in the world quite fast. All code is
+              open source on GitHub, the subdirectories frontend/backend inside
+              of /web!
+            </p>
+          </div>
+        </div>
+        <div class="expandable">
+          <div class="expandable-header" onclick="toggleExpandable(this)">
+            <span class="expandable-title">Alternatives</span>
+            <span class="expandable-icon">▼</span>
+          </div>
+          <div class="expandable-content">
+            <p>
+              If you are familiar with using command-line-interface tools
+              (CLIs), feel free to use mine:
+              <a href="https://pypi.org/project/remixtree/">Check it out here</a
+              ><br />
+              This provides more insight and looks prettier while being a great
+              way to learn about the terminal!
             </p>
           </div>
         </div>
