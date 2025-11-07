@@ -1,11 +1,23 @@
 class RemixNodes:
-    def __init__(self, project_id, title):
+    def __init__(self, project_id, title, shared_date=None):
         self.project_id = project_id 
         self.title = title
         self.children = []
+        self.shared_date = shared_date
 
     def add_child(self, child_node):
         self.children.append(child_node)
+        
+    def sort_children_by_share_date(self, reverse=False):
+        """sort the kids by share date, oldest first by default"""
+        self.children.sort(
+            key=lambda node: node.shared_date or "", 
+            reverse=reverse
+        )
+        
+        for child in self.children:
+            child.sort_children_by_share_date(reverse)
+            
 
     def generate_tree(self, prefix="", is_last=True, depth=0, use_color=True):
         # should i remove the color thing? it's somewhat useless

@@ -88,6 +88,7 @@ async def main():
                 start_time = time.perf_counter()
                 tree = await build_remix_tree(session, root, "root", MAX_DEPTH, progress=progress, verbose=VERBOSE)
                 end_time = time.perf_counter()
+                tree.sort_children_by_share_date(reverse=True) # newest first
                 progress.update(task3, completed=True)
             
             elapsed_time = end_time - start_time

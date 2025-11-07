@@ -5,9 +5,9 @@ import asyncio
 
 console = Console()
 
-async def build_remix_tree(session, project_id, project_title, max_depth=None, current_depth=0, progress=None, verbose=False, on_node_completed=None):
+async def build_remix_tree(session, project_id, project_title, max_depth=None, current_depth=0, progress=None, verbose=False, on_node_completed=None, shared_date=None):
     """the **recursive** function to construct the remix tree, did i mention it is recursive already?"""
-    node = RemixNodes(project_id, project_title)
+    node = RemixNodes(project_id, project_title, shared_date=shared_date)
     
     if max_depth is not None and current_depth >= max_depth:
         if on_node_completed:
@@ -33,8 +33,9 @@ async def build_remix_tree(session, project_id, project_title, max_depth=None, c
         for remix in remixes:
             remix_id = remix["id"]
             remix_title = remix["title"]
+            remix_shared = remix.get("history", {}).get("shared") # if adding more sorting options later, make ts dynamic
             child_tasks.append(
-                build_remix_tree(session, remix_id, remix_title, max_depth, current_depth + 1, progress=progress, verbose=verbose, on_node_completed=on_node_completed)
+                build_remix_tree(session, remix_id, remix_title, max_depth, current_depth + 1, progress=progress, verbose=verbose, on_node_completed=on_node_completed, shared_date=remix_shared)
             )
         
         children = await asyncio.gather(*child_tasks)
