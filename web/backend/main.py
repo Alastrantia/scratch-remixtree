@@ -95,6 +95,7 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
                                 return {
                                     'id': node.project_id,
                                     'title': node.title,
+                                    'shared_date': node.shared_date,
                                     'children': [tree_to_dict(child) for child in node.children]
                                 }
                             
@@ -157,6 +158,7 @@ async def get_tree(project_id: int, max_depth: int = None):
             return {
                 'id': node.project_id,
                 'title': node.title,
+                'shared_date': node.shared_date,
                 'children': [tree_to_dict(child) for child in node.children]
             }
         
