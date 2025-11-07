@@ -359,7 +359,7 @@ button:disabled {
   display: none;
 }
 
-/* Info section */
+
 .info-section {
   margin-bottom: 30px;
 }
@@ -462,4 +462,37 @@ footer a:hover {
   .stats {
     grid-template-columns: 1fr;
   }
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+.sort-controls label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.sort-controls select {
+  padding: 8px 12px;
+  border: 1px solid var(--scratch-border);
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  background: white;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.sort-controls select:focus {
+  outline: none;
+  border-color: var(--scratch-purple);
+}
+
+.sort-controls select:hover {
+  border-color: var(--scratch-purple);
 }

@@ -5,6 +5,7 @@ let treeData = null;
 let startTime = 0;
 let totalNodes = 0;
 let maxDepth = 0;
+let currentSortMode = 'share-date-desc'; // default to newest first
 
 function toggleExpandable(header) {
   header.parentElement.classList.toggle("active");
@@ -29,7 +30,7 @@ function addConsoleMessage(message, type = "") {
   line.textContent = message;
   consoleEl.appendChild(line);
   
-  // remove old messages from the top to stay within the limit and not make the browser explode
+  // remove old lines to prevent browser destruction
   while (consoleEl.children.length > MAX_CONSOLE_LINES) {
     consoleEl.removeChild(consoleEl.firstChild);
   }
@@ -82,13 +83,13 @@ async function buildTree() {
             "done"
           );
           
-          // statas
+          // update stats
           document.getElementById("totalProjects").textContent = data.total_nodes;
           document.getElementById("maxDepthReached").textContent = calculateMaxDepth(data.tree);
           document.getElementById("buildTime").textContent = buildTime + "s";
           document.getElementById("stats").style.display = "grid";
           
-          // render tree
+          // render the tree
           treeData = data.tree;
           renderTree(treeData);
           document.getElementById("treeContainer").style.display = "block";
@@ -107,7 +108,7 @@ async function buildTree() {
           return;
         }
 
-        // on progress SSE event, show it in console
+        // progress updates from SSE
         if (data.type === "progress") {
           addConsoleMessage(
             `Processing: ${data.node.title} (depth ${data.node.depth}, ${data.node.children_count} remixes)`,
@@ -122,7 +123,7 @@ async function buildTree() {
     };
 
     eventSource.onerror = () => {
-      // ignore if we closed it OURSELVES after completion
+      // ignore if we closed it ourselves
       if (streamClosedByClient) return;
 
       setConsoleMessage(
@@ -146,6 +147,56 @@ function calculateMaxDepth(node, depth = 0) {
   return Math.max(...node.children.map(child => calculateMaxDepth(child, depth + 1)));
 }
 
+// sorting logic for the tree
+function sortChildren(children, sortMode) {
+  if (!children || children.length === 0) return children;
+  
+  const sorted = [...children];
+  
+  switch (sortMode) {
+    case 'share-date-desc':
+      sorted.sort((a, b) => {
+        if (!a.shared_date) return 1;
+        if (!b.shared_date) return -1;
+        return new Date(b.shared_date) - new Date(a.shared_date);
+      });
+      break;
+      
+    case 'share-date-asc':
+      sorted.sort((a, b) => {
+        if (!a.shared_date) return 1;
+        if (!b.shared_date) return -1;
+        return new Date(a.shared_date) - new Date(b.shared_date);
+      });
+      break;
+      
+    case 'remix-count-desc':
+      sorted.sort((a, b) => {
+        const aCount = a.children ? a.children.length : 0;
+        const bCount = b.children ? b.children.length : 0;
+        return bCount - aCount;
+      });
+      break;
+      
+    case 'remix-count-asc':
+      sorted.sort((a, b) => {
+        const aCount = a.children ? a.children.length : 0;
+        const bCount = b.children ? b.children.length : 0;
+        return aCount - bCount;
+      });
+      break;
+      
+    case 'none':
+      // no sorting, keep original order
+      return children;
+      
+    default:
+      return sorted;
+  }
+  
+  return sorted;
+}
+
 function renderTree(node) {
   const treeOutput = document.getElementById("treeOutput");
   treeOutput.innerHTML = "";
@@ -163,7 +214,7 @@ function renderNode(node, parentElem, depth) {
   
   nodeDiv.style.cursor = "pointer";
   nodeDiv.onclick = (e) => {
-    // don't redirect if the expand/collapse button is clicked
+    // don't redirect if clicking the expand button
     if (e.target.classList.contains("toggle-btn")) return;
     window.open(`https://scratch.mit.edu/projects/${node.id}`, "_blank");
   };
@@ -202,12 +253,8 @@ function renderNode(node, parentElem, depth) {
   li.appendChild(nodeDiv);
 
   if (node.children && node.children.length > 0) {
-    // sort children by number of remixes
-    const sortedChildren = [...node.children].sort((a, b) => {
-      const aCount = a.children ? a.children.length : 0;
-      const bCount = b.children ? b.children.length : 0;
-      return bCount - aCount;
-    });
+    // apply the current sort mode
+    const sortedChildren = sortChildren(node.children, currentSortMode);
     
     const childUl = document.createElement("ul");
     sortedChildren.forEach((child) => renderNode(child, childUl, depth + 1));
@@ -217,7 +264,15 @@ function renderNode(node, parentElem, depth) {
   parentElem.appendChild(li);
 }
 
-// toggle tree actio nbuttons
+// sort dropdown change handler
+document.getElementById("sortSelect").addEventListener("change", (e) => {
+  currentSortMode = e.target.value;
+  if (treeData) {
+    renderTree(treeData); // re-render with new sort
+  }
+});
+
+// expand/collapse buttons
 document.getElementById("expandAll").addEventListener("click", () => {
   document.querySelectorAll(".tree li").forEach((li) => {
     li.classList.remove("collapsed");
@@ -236,6 +291,7 @@ document.getElementById("collapseAll").addEventListener("click", () => {
   });
 });
 
+// download as text file
 document.getElementById("downloadBtn").addEventListener("click", () => {
   if (!treeData) return;
 
@@ -256,18 +312,22 @@ function treeToText(node, prefix = "", isLast = true) {
 
   const childPrefix = prefix + (isLast ? "    " : "│   ");
   if (node.children && node.children.length > 0) {
-    node.children.forEach((child, i) => {
-      result += treeToText(child, childPrefix, i === node.children.length - 1);
+    // use the current sort mode for text export too
+    const sortedChildren = sortChildren(node.children, currentSortMode);
+    sortedChildren.forEach((child, i) => {
+      result += treeToText(child, childPrefix, i === sortedChildren.length - 1);
     });
   }
 
   return result;
 }
 
+// enter key to build
 document.getElementById("projectId").addEventListener("keypress", (e) => {
   if (e.key === "Enter") buildTree();
 });
 
+// cleanup on page close
 window.addEventListener("beforeunload", () => {
   if (eventSource) eventSource.close();
 });
