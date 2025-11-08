@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://remixtree.alass.dev/sitemap.xml
