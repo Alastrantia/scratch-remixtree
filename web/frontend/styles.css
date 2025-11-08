@@ -187,7 +187,6 @@ button:disabled {
   color: var(--scratch-orange);
 }
 
-/* Stats section */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -215,7 +214,6 @@ button:disabled {
   margin-top: 4px;
 }
 
-/* Tree visualization */
 .tree-container {
   margin-bottom: 30px;
 }
@@ -449,6 +447,48 @@ footer a:hover {
   text-decoration: underline;
 }
 
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  padding: 4px 0;
+}
+
+.sort-controls label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  white-space: nowrap;
+}
+
+.sort-controls select {
+  padding: 8px 32px 8px 12px;
+  border: 1px solid var(--scratch-border);
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  background: white;
+  color: var(--text-dark);
+  cursor: pointer;
+  min-width: 200px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23575e75' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.sort-controls select:focus {
+  outline: none;
+  border-color: var(--scratch-purple);
+  box-shadow: 0 0 0 2px rgba(133, 92, 214, 0.1);
+}
+
+.sort-controls select:hover {
+  border-color: var(--scratch-purple);
+  background-color: #fafafa;
+}
+
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 24px;
@@ -462,37 +502,18 @@ footer a:hover {
   .stats {
     grid-template-columns: 1fr;
   }
-}
-
-.sort-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: auto;
-}
-
-.sort-controls label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.sort-controls select {
-  padding: 8px 12px;
-  border: 1px solid var(--scratch-border);
-  border-radius: 4px;
-  font-size: 13px;
-  font-family: inherit;
-  background: white;
-  color: var(--text-dark);
-  cursor: pointer;
-}
-
-.sort-controls select:focus {
-  outline: none;
-  border-color: var(--scratch-purple);
-}
-
-.sort-controls select:hover {
-  border-color: var(--scratch-purple);
+  
+  .tree-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .sort-controls {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  
+  .sort-controls select {
+    min-width: 100%;
+  }
 }

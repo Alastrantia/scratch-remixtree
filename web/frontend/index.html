@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="70861660-6b25-4bc2-a14f-9c4553599a06"></script>
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="70861660-6b25-4bc2-a14f-9c4553599a06"
+    ></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scratch-remixtree</title>
@@ -45,20 +49,28 @@
       <div class="tree-container" id="treeContainer" style="display: none">
         <div class="tree-card">
           <div class="tree-actions">
-  <div class="sort-controls">
-    <label for="sortSelect">Sort by:</label>
-    <select id="sortSelect">
-      <option value="share-date-desc">Share Date (Newest First)</option>
-      <option value="share-date-asc">Share Date (Oldest First)</option>
-      <option value="remix-count-desc">Remix Count (Most First)</option>
-      <option value="remix-count-asc">Remix Count (Least First)</option>
-      <option value="none">API Order (No Sorting)</option>
-    </select>
-  </div>
-  <button id="expandAll">Expand All</button>
-  <button id="collapseAll">Collapse All</button>
-  <button id="downloadBtn">Download as Text</button>
-</div>
+            <div class="sort-controls">
+              <label for="sortSelect">Sort by:</label>
+              <select id="sortSelect">
+                <option value="share-date-desc">
+                  Share Date (Newest First)
+                </option>
+                <option value="share-date-asc">
+                  Share Date (Oldest First)
+                </option>
+                <option value="remix-count-desc">
+                  Remix Count (Most First)
+                </option>
+                <option value="remix-count-asc">
+                  Remix Count (Least First)
+                </option>
+                <option value="none">API Order (No Sorting)</option>
+              </select>
+            </div>
+            <button id="expandAll">Expand All</button>
+            <button id="collapseAll">Collapse All</button>
+            <button id="downloadBtn">Download as Text</button>
+          </div>
           <div class="tree" id="treeOutput"></div>
         </div>
       </div>
