@@ -56,11 +56,16 @@ async def main():
                 task2 = progress.add_task("Getting the stats for the main project...", total=None)
                 root_data = await fetch_project_data(session, root)
                 if not root_data:
-                    console.print("[bold red]✗ Failed[/bold red] to fetch root project data")
-                    sys.exit(1)
+                    raise RuntimeError("Failed to fetch root project data")
                 progress.update(task2, completed=True)
                 
                 root_remix_count = root_data.get("stats", {}).get("remixes", 0)
+                root_title = root_data["title"]
+                root_shared = root_data.get("history", {}).get("shared")
+                root_likes = root_data.get("stats", {}).get("loves")
+                root_favorites = root_data.get("stats", {}).get("favorites")
+                root_views = root_data.get("stats", {}).get("views")
+                root_description = root_data["description"]
             
             console.print()
             console.print(f"[bold]Start Project ID:[/bold] {PROJECT_ID}")
@@ -86,7 +91,7 @@ async def main():
                     total=None
                 )
                 start_time = time.perf_counter()
-                tree = await build_remix_tree(session, root, "root", MAX_DEPTH, progress=progress, verbose=VERBOSE)
+                tree = await build_remix_tree(session, root, root_title, MAX_DEPTH, progress=progress, verbose=VERBOSE, shared_date=root_shared, likes=root_likes, favorites=root_favorites, views=root_views, description=root_description)
                 end_time = time.perf_counter()
                 tree.sort_children_by_share_date(reverse=True) # newest first
                 progress.update(task3, completed=True)
