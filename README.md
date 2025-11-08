@@ -5,38 +5,55 @@
 [![Alastrantia](https://img.shields.io/badge/made_by-alastrantia-purple)](https://scratch.mit.edu/users/Alastrantia)
 [![All tests](https://github.com/Alastrantia/scratch-remixtree/actions/workflows/test-cli.yml/badge.svg)](https://github.com/Alastrantia/scratch-remixtree/actions/workflows/test-cli.yml)
 
-> A simple CLI to rebuild Scratch’s remix tree feature, which was removed sometime around Mid-October 2025.  
+> Tools to rebuild Scratch's remix tree feature!  
+> **🌐 Try the web version instantly:** https://remixtree.alass.dev  
 > **#BringBackRemixTrees**
 
-**Like this tool?** Star the repo to help others find it and make me feel good 🥺
+**Like it?** Star the repo to help others find it and make me feel good 🥺
 
-## Demo :DD
+## Demos :DD
 
-<img src="demos/demo.gif" width="70%" alt="Small tree demo"><br>
->Project Link: https://scratch.mit.edu/projects/948573479/  
->Command: `remixtree 948573479 --output tree.txt --verbose`
+<table>
+<tr>
+<td width="50%">
 
+<img src="demos/demo.gif" width="100%" alt="CLI demo">
+
+**CLI Version**  
+Project: https://scratch.mit.edu/projects/948573479/  
+Command: `remixtree 948573479 --output tree.txt --verbose`
+
+</td>
+<td width="50%">
+
+<img src="demos/webdemo.png" width="100%" alt="Web demo">
+
+**Web Version**  
+Try it instantly at https://remixtree.alass.dev!
+
+</td>
+</tr>
+</table>
 
 ## What is this?
 
 Scratch removed the remix tree feature without any warning... 
-So, here we go again, in the form of a CLI!
+So, here we go again, as a webapp and a CLI!
 
-This CLI fetches a project’s remixes and builds a tree showing how all the remixes connect, using the official scratch API.
-
+This tool fetches a project's remixes and builds a tree showing how all the remixes connect, using the official scratch API.
 
 ## Features
 
-- Built with `rich`
+- **Web version** built with `FastAPI`, **CLI** built with `rich`
 - Async, can create large trees decently fast
-- Optional verbose mode to go crazy
+- Optional verbose mode to go crazy (CLI-only)
 - Save the full remix tree to a file if ya want to
-- Supports max depth if you wanna show empathy for the Scratch Servers
+- Supports max depth if you wanna show empathy for the Scratch Servers (CLI-only)
 - Works on Linux, macOS, and Windows (Python 3.9+) (hopefully, if not, tell me)
 
 ---
 
-## Installation
+## Installation for the CLI
 
 ### Recommended: using **pipx** (isolated, should-work):
 ```bash
@@ -44,16 +61,18 @@ pip install --user pipx
 pipx install remixtree
 ```
 ### Alternatively:
-
 ```
 pip install remixtree
 ```
 
 ## Basic Usage
+(This is only for the CLI, the WebApp is pretty self-explanatory)
+
 ### Example:
 ```
 remixtree 1223809053 --depth 3 --output tree_output.txt
 ```
+
 ### More options:
 ```
 -h, --help: 
@@ -96,9 +115,3 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 - [ ] Export to JSON/CSV
 - [x] Web interface
 - [ ] Batch processing
-
-## Other people have made similar, maybe even cooler things!
-- redspacecat made retree: https://retree.quuq.dev/
-- CST1229 made treemix: https://cst1229.eu.org/treemix/
-
-Check those out too!
