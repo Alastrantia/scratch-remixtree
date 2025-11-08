@@ -1,9 +1,13 @@
 class RemixNodes:
-    def __init__(self, project_id, title, shared_date=None):
+    def __init__(self, project_id, title, shared_date=None, likes=0, favorites=0, views=0, description=""):
         self.project_id = project_id 
         self.title = title
         self.children = []
         self.shared_date = shared_date
+        self.likes = likes
+        self.views = views
+        self.favorites = favorites
+        self.description = description
 
     def add_child(self, child_node):
         self.children.append(child_node)
