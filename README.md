@@ -92,10 +92,9 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 - [x] Verbose mode
 - [x] File output
 - [x] Color coding
-- [ ] Interactive tree navigation
-- [ ] Visual tree using graphviz
+- [x] Interactive tree navigation (yes, but not the original tree yet)
 - [ ] Export to JSON/CSV
-- [ ] Web interface
+- [x] Web interface
 - [ ] Batch processing
 
 ## Other people have made similar, maybe even cooler things!
