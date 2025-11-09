@@ -23,6 +23,7 @@ async def build_remix_tree(session, project_id, project_title, max_depth=None, c
     if not data:
         if on_node_completed:
             await on_node_completed(node, current_depth, "no_data")
+        return node
     
     num_remixes = data.get("stats", {}).get("remixes", 0)
     
