@@ -14,10 +14,8 @@
 ## Demos :DD
 
 <p align="center">
-  <figure>
-    <img src="demos/demo.gif" width="45%" alt="CLI demo" style="margin: 0 1%;">
-    <img src="demos/webdemo.png" width="45%" alt="Web demo" style="margin: 0 1%;">
-  </figure>
+  <img src="demos/demo.gif" width="45%" alt="CLI demo" style="margin:0 1%;">
+  <img src="demos/webdemo.png" width="45%" alt="Web demo" style="margin:0 1%;">
 </p>
 
 <p align="center">
