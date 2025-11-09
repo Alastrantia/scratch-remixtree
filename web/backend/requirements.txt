@@ -1,4 +1,4 @@
 fastapi
 aiohttp
-remixtree>=0.1.13
+remixtree>=0.1.17
 uvicorn
