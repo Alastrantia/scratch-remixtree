@@ -13,27 +13,22 @@
 
 ## Demos :DD
 
-<table>
-<tr>
-<td width="50%">
+<p align="center">
+  <figure>
+    <img src="demos/demo.gif" width="45%" alt="CLI demo" style="margin: 0 1%;">
+    <img src="demos/webdemo.png" width="45%" alt="Web demo" style="margin: 0 1%;">
+  </figure>
+</p>
 
-<img src="demos/demo.gif" width="100%" alt="CLI demo">
+<p align="center">
+  <b>CLI Version:</b> <a href="https://scratch.mit.edu/projects/948573479/">Project 948573479</a><br>
+  <code>remixtree 948573479 --output tree.txt --verbose</code>
+</p>
 
-**CLI Version**  
-Project: https://scratch.mit.edu/projects/948573479/  
-Command: `remixtree 948573479 --output tree.txt --verbose`
+<p align="center">
+  <b>Web Version:</b> Try it instantly at <a href="https://remixtree.alass.dev">remixtree.alass.dev</a>!
+</p>
 
-</td>
-<td width="50%">
-
-<img src="demos/webdemo.png" width="100%" alt="Web demo">
-
-**Web Version**  
-Try it instantly at https://remixtree.alass.dev!
-
-</td>
-</tr>
-</table>
 
 ## What is this?
 
