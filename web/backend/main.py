@@ -49,8 +49,10 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
             UwU 3> 3> 3> 3>
             """
         }
-        yield f"data: {json.dumps(response)}\n\n"
-        return
+        
+        async def blocked_event():
+            yield f"data: {json.dumps(response)}\n\n"
+        return StreamingResponse(blocked_event(), media_type="text/event-stream")
             
     async def event_generator():
         try:
@@ -169,12 +171,11 @@ async def get_tree(project_id: int, max_depth: int = None):
     get complete tree as JSON (no streaming) :sob:
     """
     if project_id in BLOCKLIST:
-                response = {
-                    'type': 'error',
-                    'message': 'No, using the other endpoint won\'t help you either :) This project is blocked and you know why.'
-                }
-                yield f"data: {json.dumps(response)}\n\n"
-                return
+        return {
+            'type': 'error',
+            'message': 'No, using the other endpoint won\'t help you either :) This project is blocked and you know why.'
+        }
+                
     try:
         tree = await build_tree_async(project_id, max_depth=max_depth)
         
