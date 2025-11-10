@@ -11,6 +11,9 @@ from remixtree.node import RemixNodes
 
 app = FastAPI(title="Scratch RemixTree API")
 
+# kid protection
+BLOCKLIST = {105500895, 10128407, 105500895, 177224273}
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -35,6 +38,20 @@ async def build_tree_stream(project_id: int, max_depth: int = None):
     """
     stream tree building progress using SSE
     """
+    if project_id in BLOCKLIST:
+        response = {
+            "type": "error",
+            "message": """Nice try, but my current server cannot handle this. But YOU can fix this problem!
+            SOL: BwQkTj3dTA2HCGQQYMxukPE5cUqa4mCKDBc6gS7fps62
+            BTC: bc1pq2sx26nafwln0vja339agpswxagvhpaan7am67awhzexy95zh8asuz83x3
+            Polygon: 0xC51D2357aaD42F2808D838C2Fbf21CE67Bf2c01F
+            
+            UwU 3> 3> 3> 3>
+            """
+        }
+        yield f"data: {json.dumps(response)}\n\n"
+        return
+            
     async def event_generator():
         try:
             # create a queue for progress updates
@@ -151,6 +168,13 @@ async def get_tree(project_id: int, max_depth: int = None):
     """
     get complete tree as JSON (no streaming) :sob:
     """
+    if project_id in BLOCKLIST:
+                response = {
+                    'type': 'error',
+                    'message': 'No, using the other endpoint won\'t help you either :) This project is blocked and you know why.'
+                }
+                yield f"data: {json.dumps(response)}\n\n"
+                return
     try:
         tree = await build_tree_async(project_id, max_depth=max_depth)
         
