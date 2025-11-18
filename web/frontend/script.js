@@ -43,7 +43,7 @@ function clearConsole() {
 }
 
 async function buildTree() {
-  const projectId = document.getElementById("projectId").value.toString.trim();
+  const projectId = document.getElementById("projectId").value.toString().trim();
 
   if (!projectId) {
     clearConsole();
