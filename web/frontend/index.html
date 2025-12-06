@@ -39,7 +39,7 @@
             <label for="projectId">Scratch Project ID</label>
             <input type="number" id="projectId" placeholder="e.g., 1223809053" data-umami-event="Project Data Input"/>
           </div>
-          <button id="buildBtn" onclick="buildTree()">Build Tree data-umami-event="Build Tree"</button>
+          <button id="buildBtn" onclick="buildTree()" data-umami-event="Build Tree">Build Tree</button>
         </div>
       </div>
 
@@ -81,9 +81,9 @@
                 <option value="none">API Order (No Sorting)</option>
               </select>
             </div>
-            <button id="expandAll">Expand All data-umami-event="Expand All"</button>
-            <button id="collapseAll">Collapse All data-umami-event="Collapse All"</button>
-            <button id="downloadBtn">Download as Text data-umami-event="Download as Text"</button>
+            <button id="expandAll" data-umami-event="Expand All">Expand All</button>
+            <button id="collapseAll" data-umami-event="Collapse All">Collapse All</button>
+            <button id="downloadBtn" data-umami-event="Download as Text">Download as Text</button>
           </div>
           <div class="tree" id="treeOutput"></div>
         </div>
