@@ -35,4 +35,4 @@ jobs:
       - name: Test CLI with griffpatch project
         shell: bash
         run: |
-          remixtree 1211578513 --verbose
+          remixtree 91723110 --verbose
