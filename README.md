@@ -39,6 +39,9 @@ This tool fetches a project's remixes and builds a tree showing how all the remi
 
 - **Web version** built with `FastAPI`, **CLI** built with `rich`
 - Async, can create large trees decently fast
+- Export to **JSON** or **CSV**, not just plain text (finally!)
+- **Batch mode**: throw a bunch of project IDs at it and it builds em all
+- `--stats` shows loves/views/faves on every project (web shows em too now)
 - Optional verbose mode to go crazy (CLI-only)
 - Save the full remix tree to a file if ya want to
 - Supports max depth if you wanna show empathy for the Scratch Servers (CLI-only)
@@ -66,16 +69,30 @@ pip install remixtree
 remixtree 1223809053 --depth 3 --output tree_output.txt
 ```
 
+### A few more:
+```
+remixtree 1223809053 --stats                 # show loves/views/faves inline
+remixtree 1223809053 -o tree.json            # format guessed from the extension
+remixtree 1223809053 -o tree.csv             # ...same deal, spreadsheet time
+remixtree 111 222 333 -o tree.txt            # batch! saves tree_111.txt, tree_222.txt, ...
+```
+
 ### More options:
 ```
 -h, --help: 
     get a list of flags like this one
 -d, --depth:
     specify how deep the tree should go, default is unlimited
+-t, --timeout:
+    request timeout in seconds, default is 300
 -v, --verbose:
     just try it, you'll see for yourself
 -o, --output:
     probably the most important flag, specify where the tree should be saved
+-f, --format:
+    txt / json / csv. skip it and i'll guess from the -o file extension (else txt)
+-s, --stats:
+    show loves/views/faves next to each project
 -c, --color:
     enable color coding by depth (disabled by default), will use rich color formatting
 ```
@@ -105,6 +122,7 @@ remixtree 1223809053 --depth 3 --output tree_output.txt
 - [x] File output
 - [x] Color coding
 - [x] Interactive tree navigation (yes, but not the original tree yet)
-- [ ] Export to JSON/CSV
+- [x] Export to JSON/CSV
 - [x] Web interface
-- [ ] Batch processing
+- [x] Batch processing
+- [x] Search/filter on the web (big trees get unwieldy fast)
