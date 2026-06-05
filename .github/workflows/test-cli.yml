@@ -7,9 +7,10 @@ on:
     branches: [ main ]
 
 jobs:
-  test-cli:
+  pytest:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ['3.9', '3.10', '3.11', '3.12']
@@ -22,17 +23,23 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install package
+      - name: Install package + test deps
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
+          pip install -e ".[test]"
+
+      # the real suite, fully mocked so it doesnt break when a project gets unshared :')
+      - name: Run pytest
+        run: pytest -q
 
       - name: Test CLI command
         shell: bash
         run: |
           remixtree --help
 
-      - name: Test CLI with griffpatch project
+      # this one actually hits the scratch api so it's allowed to flake (project gone etc)
+      - name: Smoke test against a live project
+        continue-on-error: true
         shell: bash
         run: |
-          remixtree 91723110 --verbose
+          remixtree 91723110 --depth 1 --stats

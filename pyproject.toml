@@ -20,6 +20,13 @@ classifiers = [
   "Topic :: Education",
 ]
 
+[project.optional-dependencies]
+test = [
+  "pytest>=7",
+  "pytest-asyncio>=0.21",
+  "aioresponses>=0.7",
+]
+
 [project.urls]
 Homepage = "https://github.com/Alastrantia/scratch-remixtree"
 BugTracker = "https://github.com/Alastrantia/scratch-remixtree/issues"
@@ -33,6 +40,12 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 # this shoouuuuuld get the version from git tagging
+
+[tool.pytest.ini_options]
+# auto mode means i dont have to slap @pytest.mark.asyncio on every single async test
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
 
 [tool.setuptools.packages]
 find = { where = ["."], include = ["remixtree*", "remixtree_cli*"], exclude = ["demos*", "tests*", "web*"] }
