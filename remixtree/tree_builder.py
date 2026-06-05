@@ -1,4 +1,4 @@
-from .node import RemixNodes
+from .node import RemixNodes, extract_metadata
 from .api import fetch_project_data, get_all_remixes
 from rich.console import Console
 import asyncio
@@ -32,15 +32,9 @@ async def build_remix_tree(session, project_id, project_title, max_depth=None, c
         
         child_tasks = []
         for remix in remixes:
-            remix_id = remix["id"]
-            remix_title = remix["title"]
-            remix_shared = remix.get("history", {}).get("shared")
-            remix_likes = remix.get("stats", {}).get("loves")
-            remix_favorites = remix.get("stats", {}).get("favorites")
-            remix_views = remix.get("stats", {}).get("views")
-            remix_description = remix["description"]
+            # extract_metadata does all the .get() dancing for us now
             child_tasks.append(
-                build_remix_tree(session, remix_id, remix_title, max_depth, current_depth + 1, progress=progress, verbose=verbose, on_node_completed=on_node_completed, shared_date=remix_shared, likes=remix_likes, favorites=remix_favorites, description=remix_description, views=remix_views)
+                build_remix_tree(session, remix["id"], remix.get("title"), max_depth, current_depth + 1, progress=progress, verbose=verbose, on_node_completed=on_node_completed, **extract_metadata(remix))
             )
         
         children = await asyncio.gather(*child_tasks)
