@@ -1,0 +1,36 @@
+# pokes render to redeploy the backend.
+# fires when i change web/backend AND every time a new package version gets published
+# (so the render box actually picks up the new remixtree from pypi!! this was the whole problem)
+# needs one secret: RENDER_DEPLOY_HOOK_URL (Render -> service -> Settings -> Deploy Hook)
+name: Deploy backend (Render)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'web/backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_run:
+    workflows: [ "Publish Python Package" ]
+    types: [ completed ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # if this was triggered by a publish, only redeploy when the publish actually worked
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    env:
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    steps:
+      - name: No hook yet?
+        if: env.RENDER_DEPLOY_HOOK_URL == ''
+        run: echo "::notice::no RENDER_DEPLOY_HOOK_URL set, skipping. grab it from Render -> your service -> Settings -> Deploy Hook and add it as a repo secret."
+
+      - name: Poke Render
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        run: |
+          echo "telling render to redeploy..."
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+          echo ""
+          echo "done, render is building (give it a min on the free plan)"

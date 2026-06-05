@@ -1,0 +1,33 @@
+# ships web/frontend to cloudflare pages whenever i touch it
+# needs two secrets: CLOUDFLARE_API_TOKEN (with Pages:Edit) + CLOUDFLARE_ACCOUNT_ID
+# (optional) repo variable CF_PAGES_PROJECT if your pages project isnt called scratch-remixtree
+name: Deploy frontend (Cloudflare Pages)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'web/frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # dont fail the build if i havent added the secrets yet, just say so
+      - name: No secrets yet?
+        if: env.CF_API_TOKEN == ''
+        run: echo "::notice::no CLOUDFLARE_API_TOKEN set, skipping deploy. add CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID in repo settings -> secrets to switch this on."
+
+      - name: Publish to Cloudflare Pages
+        if: env.CF_API_TOKEN != ''
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy web/frontend --project-name=${{ vars.CF_PAGES_PROJECT || 'scratch-remixtree' }} --branch=main --commit-dirty=true
