@@ -1,0 +1,34 @@
+# deploys the sapi-proxy worker (incl. its keep-warm cron trigger) to cloudflare on push.
+# heads up: CLOUDFLARE_API_TOKEN needs "Workers Scripts: Edit" perms for this. the token i
+# set up for pages only had Pages:Edit, so either widen it or make a new one with both
+# (Workers Scripts:Edit + Cloudflare Pages:Edit) and update the repo secret.
+name: Deploy worker (Cloudflare)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'web/sapi-proxy/**'
+      - '.github/workflows/deploy-worker.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No secrets yet?
+        if: env.CF_API_TOKEN == ''
+        run: echo "::notice::no CLOUDFLARE_API_TOKEN set, skipping. (needs Workers Scripts:Edit perms for the worker.)"
+
+      - name: Deploy sapi-proxy
+        if: env.CF_API_TOKEN != ''
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: web/sapi-proxy
+          command: deploy

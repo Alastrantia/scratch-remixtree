@@ -46,12 +46,12 @@ add this secret:
 render's free tier sleeps after ~15min idle and cold-starts for ~50s. two things fight that:
 
 1. **cloudflare cron (the reliable one)** — `web/sapi-proxy` now pings `/health` every 5 min
-   via a cron trigger. **you have to redeploy the worker once to register it:**
-   ```bash
-   cd web/sapi-proxy && npx wrangler deploy
-   ```
-   check it stuck with `npx wrangler triggers` (or the Cloudflare dashboard → the worker →
-   Settings → Triggers → Cron Triggers).
+   via a cron trigger. it auto-deploys via `deploy-worker.yml` whenever `web/sapi-proxy/**`
+   changes — **but** that needs `CLOUDFLARE_API_TOKEN` to have **Workers Scripts: Edit** perms
+   (the pages token only had Pages:Edit, so widen it or make a combined token).
+   prefer doing it by hand? `cd web/sapi-proxy && npx wrangler deploy`.
+   either way, check the cron stuck with `npx wrangler triggers` (or Cloudflare dashboard →
+   the worker → Settings → Triggers → Cron Triggers, should show `*/5 * * * *`).
 2. **github actions backup** — `keep_warm.yml` still pings every 5 min in case cloudflare
    ever hiccups. belt and suspenders.
 
