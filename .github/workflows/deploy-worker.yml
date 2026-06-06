@@ -31,4 +31,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: web/sapi-proxy
+          # pin a modern wrangler — the action's default (3.90) predates wrangler.jsonc support
+          wranglerVersion: '4.45.3'
           command: deploy
