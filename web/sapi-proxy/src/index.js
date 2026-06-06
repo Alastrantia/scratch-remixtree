@@ -39,4 +39,19 @@ export default {
 
     return response;
   },
+
+  // keeps the render free-tier backend awake. cloudflare crons actually fire on time
+  // (unlike github actions which drift all over the place), so the box doesnt get the
+  // chance to nap for 15min and cold-start for ~50s on the next person.
+  async scheduled(event, env, ctx) {
+    const BACKEND = (env && env.BACKEND_URL) || "https://backend.alass.dev";
+    ctx.waitUntil(
+      fetch(`${BACKEND}/health`, {
+        headers: { "User-Agent": "Scratch-RemixTree-KeepWarm" },
+        cf: { cacheTtl: 0 },
+      }).catch(() => {
+        /* render is probably mid-boot, the next tick will get it */
+      })
+    );
+  },
 };

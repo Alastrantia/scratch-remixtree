@@ -1,5 +1,10 @@
 {
   "name": "sapi-proxy",
   "main": "src/index.js",
-  "compatibility_date": "2025-10-30"
+  "compatibility_date": "2025-10-30",
+  // ping the render backend every 5 min so it never gets a chance to spin down
+  // (render free tier sleeps after ~15min idle and cold-starts for ~50s, ugh)
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  }
 }

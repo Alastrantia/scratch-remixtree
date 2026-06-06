@@ -1,12 +1,16 @@
 # hehehehehehehhe
 # without this the render instance likes to shut down
+# NOTE: the real keep-warm is the cloudflare cron in web/sapi-proxy now (it actually
+# fires on time). this is just a backup in case cloudflare ever hiccups - github crons
+# drift like crazy so dont rely on it alone. every 5 min gives us headroom on the 15min nap.
 name: Wake Up Call
 on:
   schedule:
-    - cron: '*/10 * * * *' 
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Render
-        run: curl -s -f --connect-timeout 60 --max-time 60 https://backend.alass.dev/health || echo "Still booting..."
+        run: curl -s -f --connect-timeout 70 --max-time 70 https://backend.alass.dev/health || echo "Still booting..."
