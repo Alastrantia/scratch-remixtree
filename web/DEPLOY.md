@@ -40,3 +40,21 @@ add this secret:
   bit native auto-deploy *can't* do, so that one's worth keeping either way.
 - the `sapi-proxy` worker isn't wired up here, it barely ever changes — push it with
   `wrangler deploy` from `web/sapi-proxy/` when you do touch it.
+
+## keeping the backend awake (important!)
+
+render's free tier sleeps after ~15min idle and cold-starts for ~50s. two things fight that:
+
+1. **cloudflare cron (the reliable one)** — `web/sapi-proxy` now pings `/health` every 5 min
+   via a cron trigger. **you have to redeploy the worker once to register it:**
+   ```bash
+   cd web/sapi-proxy && npx wrangler deploy
+   ```
+   check it stuck with `npx wrangler triggers` (or the Cloudflare dashboard → the worker →
+   Settings → Triggers → Cron Triggers).
+2. **github actions backup** — `keep_warm.yml` still pings every 5 min in case cloudflare
+   ever hiccups. belt and suspenders.
+
+the frontend also pre-warms `/health` on page load and rides out a cold start with a
+"waking up…" message + retries, so even if both pingers miss, worst case is a ~50s wait
+with a friendly message instead of an error.
