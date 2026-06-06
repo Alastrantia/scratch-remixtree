@@ -1,0 +1,8 @@
+# cloudflare pages headers
+# the css/js filenames never change, and pages was serving em with a 4h max-age, so after
+# a deploy ppl kept seeing the OLD styles until their cache expired. tell browsers to always
+# revalidate instead - the etag makes that a cheap 304 when nothing actually changed.
+/styles.css
+  Cache-Control: public, max-age=0, must-revalidate
+/script.js
+  Cache-Control: public, max-age=0, must-revalidate
