@@ -48,6 +48,17 @@ function closeStream() {
   }
 }
 
+/* ---------------------------- keep-warm ---------------------------- */
+// the backend naps on render's free tier after ~15min and cold-starts for ~50s.
+// fire a cheap /health ping so it's (hopefully) awake by the time you hit build.
+let lastWarm = 0;
+function warmBackend() {
+  const now = Date.now();
+  if (now - lastWarm < 20000) return; // dont spam it
+  lastWarm = now;
+  fetch(`${API_BASE}/health`, { cache: "no-store" }).catch(() => {});
+}
+
 /* ------------------------------ build ------------------------------ */
 function buildTree() {
   const projectId = $("projectId").value.toString().trim();
@@ -66,17 +77,35 @@ function buildTree() {
   $("treeContainer").style.display = "none";
   $("stats").style.display = "none";
 
-  setConsoleMessage("Connecting... this can take a bit", "info");
+  setConsoleMessage("connecting… if the server was asleep this can take ~50s (free tier 🥲)", "info");
   startTime = Date.now();
   totalNodes = 0;
+  warmBackend(); // nudge it awake right now too
 
-  try {
+  // cold-start handling: if we cant connect yet, the box is probably still booting,
+  // so be patient and retry instead of bailing with a scary error.
+  let receivedAny = false;
+  let coldRetries = 0;
+  const MAX_COLD_RETRIES = 12; // ~plenty to outlast a 50s cold start
+
+  function openStream() {
     closeStream();
     streamClosedByClient = false;
 
-    eventSource = new EventSource(`${API_BASE}/build/${projectId}`);
+    try {
+      eventSource = new EventSource(`${API_BASE}/build/${projectId}`);
+    } catch (error) {
+      setConsoleMessage(`Error: ${error.message}`, "error");
+      buildBtn.disabled = false;
+      return;
+    }
+
+    eventSource.onopen = () => {
+      coldRetries = 0; // we're through, server's awake
+    };
 
     eventSource.onmessage = (event) => {
+      receivedAny = true;
       try {
         const data = JSON.parse(event.data);
 
@@ -123,14 +152,38 @@ function buildTree() {
 
     eventSource.onerror = () => {
       if (streamClosedByClient) return;
-      setConsoleMessage("Connection error...", "error");
+
+      // we already got data and THEN dropped -> a real mid-build connection loss
+      if (receivedAny) {
+        setConsoleMessage("lost the connection mid-build :( give it another go?", "error");
+        closeStream();
+        buildBtn.disabled = false;
+        return;
+      }
+
+      // never connected yet -> the free-tier box is almost certainly still waking up
+      coldRetries++;
+      if (coldRetries <= MAX_COLD_RETRIES) {
+        setConsoleMessage(
+          `waking the server up — free tier naps after 15min so the first hit can take ~50s. still trying… (${coldRetries})`,
+          "info"
+        );
+        warmBackend();
+        // if the browser gave up (CLOSED), reconnect ourselves; if it's still
+        // CONNECTING, leave it be and let it keep trying on its own
+        if (!eventSource || eventSource.readyState === EventSource.CLOSED) {
+          setTimeout(openStream, 3000);
+        }
+        return;
+      }
+
+      setConsoleMessage("couldnt reach the server, it might still be cold-starting. give it a minute and retry?", "error");
       closeStream();
       buildBtn.disabled = false;
     };
-  } catch (error) {
-    setConsoleMessage(`Error: ${error.message}`, "error");
-    buildBtn.disabled = false;
   }
+
+  openStream();
 }
 
 function calculateMaxDepth(node, depth = 0) {
@@ -380,6 +433,11 @@ $("buildBtn").addEventListener("click", buildTree);
 $("projectId").addEventListener("keypress", (e) => {
   if (e.key === "Enter") buildTree();
 });
+
+// start waking the backend the moment someone shows up / starts typing an ID,
+// so it's warm by the time they actually hit build
+warmBackend();
+$("projectId").addEventListener("focus", warmBackend);
 
 // FAQ accordions (delegated, no inline onclick needed)
 document.querySelectorAll(".expandable-header").forEach((header) => {
